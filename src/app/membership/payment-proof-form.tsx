@@ -72,7 +72,7 @@ export function PaymentProofForm({ termId = null }: PaymentProofFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-full bg-foreground text-background px-6 py-2.5 font-medium self-start disabled:opacity-50"
+        className="rounded-full bg-gdg-blue text-white px-6 py-2.5 font-medium self-start disabled:opacity-50"
       >
         {isSubmitting ? "Uploading…" : "Submit for review"}
       </button>

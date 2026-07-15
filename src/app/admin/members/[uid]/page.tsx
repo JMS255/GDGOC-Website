@@ -99,7 +99,7 @@ export default async function AdminMemberDetailPage({
           >
             <input name="title" placeholder="e.g. Handle registration desk" className="border rounded px-3 py-2" />
             <input type="date" name="dueDate" className="border rounded px-3 py-2" />
-            <button className="rounded-full bg-foreground text-background px-5 py-2 font-medium self-start">
+            <button className="rounded-full bg-gdg-blue text-white px-5 py-2 font-medium self-start">
               Assign
             </button>
           </form>
@@ -125,7 +125,7 @@ export default async function AdminMemberDetailPage({
                           await setResponsibilityStatus(r.id, uid, "done")
                         }}
                       >
-                        <button className="text-xs rounded-full bg-foreground text-background px-3 py-1.5">
+                        <button className="text-xs rounded-full bg-gdg-green text-white px-3 py-1.5">
                           Done
                         </button>
                       </form>
@@ -135,7 +135,7 @@ export default async function AdminMemberDetailPage({
                           await setResponsibilityStatus(r.id, uid, "missed")
                         }}
                       >
-                        <button className="text-xs rounded-full border px-3 py-1.5">Missed</button>
+                        <button className="text-xs rounded-full border-2 border-gdg-red text-gdg-red px-3 py-1.5">Missed</button>
                       </form>
                     </div>
                   )}
@@ -172,7 +172,7 @@ export default async function AdminMemberDetailPage({
               <label className="text-xs opacity-60">Rating for {activeTerm.label} (1-5)</label>
               <input type="number" name="rating" min={1} max={5} required className="border rounded px-3 py-2" />
               <textarea name="note" placeholder="Short note" className="border rounded px-3 py-2" />
-              <button className="rounded-full bg-foreground text-background px-5 py-2 font-medium self-start">
+              <button className="rounded-full bg-gdg-blue text-white px-5 py-2 font-medium self-start">
                 Submit review
               </button>
             </form>

@@ -67,7 +67,7 @@ export default async function CheckinPage({
               >
                 <button
                   className={`text-sm rounded-full px-4 py-2 ${
-                    row.attended ? "bg-foreground text-background" : "border"
+                    row.attended ? "bg-gdg-green text-white" : "border"
                   }`}
                 >
                   {row.attended ? "Checked in ✓" : "Check in"}

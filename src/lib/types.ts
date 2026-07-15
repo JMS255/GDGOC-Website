@@ -135,7 +135,14 @@ export interface MerchOrderRecord {
 // Fixed department set — an applicant's selected interests are department
 // names directly, so routing an application to the right Department Head's
 // queue is just `interests.includes(user.department)`, no separate mapping.
-export const DEPARTMENTS = ["Events", "Creatives", "Tech & Docu", "PR & Marketing", "Finance"] as const
+export const DEPARTMENTS = [
+  "Creative",
+  "Tech & Docu",
+  "Events",
+  "Logistics",
+  "Finance",
+  "PR/Marketing",
+] as const
 export type Department = (typeof DEPARTMENTS)[number]
 
 export type ApplicationStatus = "new" | "approved" | "rejected" | "converted"

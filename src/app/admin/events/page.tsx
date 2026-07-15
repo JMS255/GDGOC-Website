@@ -49,7 +49,7 @@ export default async function AdminEventsPage() {
                       await publishEvent(event.id)
                     }}
                   >
-                    <button className="text-sm rounded-full bg-foreground text-background px-4 py-2">
+                    <button className="text-sm rounded-full bg-gdg-blue text-white px-4 py-2">
                       Publish
                     </button>
                   </form>

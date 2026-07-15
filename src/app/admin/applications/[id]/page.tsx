@@ -71,7 +71,7 @@ export default async function ApplicationDetailPage({
               await approveApplication(id)
             }}
           >
-            <button className="rounded-full bg-foreground text-background px-6 py-2.5 font-medium">
+            <button className="rounded-full bg-gdg-green text-white px-6 py-2.5 font-medium">
               Approve
             </button>
           </form>
@@ -81,7 +81,7 @@ export default async function ApplicationDetailPage({
               await rejectApplication(id)
             }}
           >
-            <button className="rounded-full border px-6 py-2.5 font-medium">Reject</button>
+            <button className="rounded-full border-2 border-gdg-red text-gdg-red px-6 py-2.5 font-medium">Reject</button>
           </form>
         </div>
       )}

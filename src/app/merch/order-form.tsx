@@ -70,7 +70,7 @@ export function OrderForm({ productId, variants }: OrderFormProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="text-sm rounded-full bg-foreground text-background px-5 py-2 font-medium"
+        className="text-sm rounded-full bg-gdg-blue text-white px-5 py-2 font-medium"
       >
         Order
       </button>
@@ -109,7 +109,7 @@ export function OrderForm({ productId, variants }: OrderFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="text-sm rounded-full bg-foreground text-background px-5 py-2 font-medium self-start disabled:opacity-50"
+        className="text-sm rounded-full bg-gdg-blue text-white px-5 py-2 font-medium self-start disabled:opacity-50"
       >
         {isSubmitting ? "Submitting…" : "Submit order"}
       </button>

@@ -14,6 +14,8 @@ const DEPT_HEAD_LINKS = [
   { href: "/admin/analytics", label: "Analytics" },
 ]
 
+const KPI_COLORS = ["var(--gdg-blue)", "var(--gdg-green)", "var(--gdg-yellow)", "var(--gdg-red)"]
+
 interface Announcement {
   id: string
   title: string
@@ -127,8 +129,12 @@ export default async function DashboardPage() {
 
       {orgKpis.length > 0 && (
         <section className="mb-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {orgKpis.map((kpi) => (
-            <div key={kpi.id} className="border rounded-lg p-4">
+          {orgKpis.map((kpi, i) => (
+            <div
+              key={kpi.id}
+              className="border-t-4 rounded-lg p-4 border"
+              style={{ borderTopColor: KPI_COLORS[i % KPI_COLORS.length] }}
+            >
               <p className="text-xs opacity-60">{kpi.label}</p>
               <p className="text-xl font-semibold">{kpi.value}</p>
             </div>

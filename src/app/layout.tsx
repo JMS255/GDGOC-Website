@@ -44,13 +44,21 @@ export default function RootLayout({
               GDGoC
             </Link>
             <div className="flex items-center gap-6 text-sm">
-              <Link href="/events">Events</Link>
-              <Link href="/merch">Merch</Link>
-              <Link href="/about">About</Link>
-              <Link href="/apply" className="font-medium">
+              <Link href="/events" className="hover:text-gdg-blue transition-colors">
+                Events
+              </Link>
+              <Link href="/merch" className="hover:text-gdg-green transition-colors">
+                Merch
+              </Link>
+              <Link href="/about" className="hover:text-gdg-yellow transition-colors">
+                About
+              </Link>
+              <Link href="/apply" className="rounded-full bg-gdg-blue text-white px-4 py-1.5 font-medium">
                 Apply
               </Link>
-              <Link href="/login">Login</Link>
+              <Link href="/login" className="hover:text-gdg-red transition-colors">
+                Login
+              </Link>
             </div>
           </nav>
         </header>

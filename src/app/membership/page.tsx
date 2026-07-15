@@ -75,7 +75,7 @@ export default async function MembershipPage() {
                     await renewFree(activeTerm.id)
                   }}
                 >
-                  <button className="rounded-full bg-foreground text-background px-6 py-2.5 font-medium">
+                  <button className="rounded-full bg-gdg-blue text-white px-6 py-2.5 font-medium">
                     Renew (Free)
                   </button>
                 </form>

@@ -57,7 +57,7 @@ export default async function LookupPage({
           placeholder="Name or email"
           className="flex-1 border rounded px-3 py-2"
         />
-        <button className="rounded-full bg-foreground text-background px-5 py-2 font-medium">
+        <button className="rounded-full bg-gdg-blue text-white px-5 py-2 font-medium">
           Search
         </button>
       </form>

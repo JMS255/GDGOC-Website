@@ -1,14 +1,25 @@
 "use client"
 
 import { useActionState, useState } from "react"
-import { DEPARTMENTS } from "@/lib/types"
-import { DEPARTMENT_INFO } from "./department-info"
+import { DEPARTMENTS, type Department } from "@/lib/types"
+import { DEPARTMENT_INFO, COURSES, YEAR_LEVELS } from "./department-info"
 import { submitApplication } from "./actions"
+
+const DEPARTMENT_COLOR: Record<Department, string> = {
+  Creative: "var(--gdg-red)",
+  "Tech & Docu": "var(--gdg-blue)",
+  Events: "var(--gdg-yellow)",
+  Logistics: "var(--gdg-green)",
+  Finance: "var(--gdg-blue-halftone)",
+  "PR/Marketing": "var(--gdg-red-halftone)",
+}
 
 export function ApplicationForm() {
   const [state, action, pending] = useActionState(submitApplication, undefined)
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([])
+  const [course, setCourse] = useState("")
   const isSubmitted = state !== undefined && !state.errors
+  const isOtherCourse = course === "Other"
 
   function toggleDepartment(dept: string) {
     setSelectedDepartments((prev) =>
@@ -57,7 +68,29 @@ export function ApplicationForm() {
         <label htmlFor="course" className="text-sm font-medium">
           Course
         </label>
-        <input id="course" name="course" className="w-full border rounded px-3 py-2" />
+        <select
+          id="course"
+          name={isOtherCourse ? undefined : "course"}
+          value={course}
+          onChange={(e) => setCourse(e.target.value)}
+          className="w-full border rounded px-3 py-2"
+        >
+          <option value="" disabled>
+            Select your course
+          </option>
+          {COURSES.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+        {isOtherCourse && (
+          <input
+            name="course"
+            placeholder="Type your course"
+            className="w-full border rounded px-3 py-2 mt-2"
+          />
+        )}
         {state?.errors?.course && <p className="text-sm text-red-600">{state.errors.course}</p>}
       </div>
 
@@ -65,14 +98,16 @@ export function ApplicationForm() {
         <label htmlFor="yearLevel" className="text-sm font-medium">
           Year level
         </label>
-        <input
-          id="yearLevel"
-          name="yearLevel"
-          type="number"
-          min={1}
-          max={5}
-          className="w-full border rounded px-3 py-2"
-        />
+        <select id="yearLevel" name="yearLevel" className="w-full border rounded px-3 py-2" defaultValue="">
+          <option value="" disabled>
+            Select your year level
+          </option>
+          {YEAR_LEVELS.map((y) => (
+            <option key={y.value} value={y.value}>
+              {y.label}
+            </option>
+          ))}
+        </select>
         {state?.errors?.yearLevel && <p className="text-sm text-red-600">{state.errors.yearLevel}</p>}
       </div>
 
@@ -95,9 +130,14 @@ export function ApplicationForm() {
           {DEPARTMENTS.map((dept) => {
             const info = DEPARTMENT_INFO[dept]
             const isSelected = selectedDepartments.includes(dept)
+            const color = DEPARTMENT_COLOR[dept]
             return (
-              <div key={dept} className={`border rounded-lg p-3 ${isSelected ? "border-gdg-blue" : ""}`}>
-                <label className="flex items-start gap-2 text-sm font-medium">
+              <div
+                key={dept}
+                className="border-2 rounded-lg p-3 transition-colors"
+                style={{ borderColor: isSelected ? color : "transparent", backgroundColor: isSelected ? `color-mix(in srgb, ${color} 10%, transparent)` : undefined }}
+              >
+                <label className="flex items-start gap-2 text-sm">
                   <input
                     type="checkbox"
                     name="interests"
@@ -106,7 +146,15 @@ export function ApplicationForm() {
                     onChange={() => toggleDepartment(dept)}
                     className="mt-1"
                   />
-                  <span>{info.label}</span>
+                  <span>
+                    <span
+                      className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-2 py-0.5 mr-2 text-black"
+                      style={{ backgroundColor: color }}
+                    >
+                      {dept}
+                    </span>
+                    <span className="font-medium">{info.label}</span>
+                  </span>
                 </label>
                 <p className="text-xs opacity-60 mt-1 ml-6">{info.description}</p>
 
@@ -143,7 +191,7 @@ export function ApplicationForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-foreground text-background px-6 py-3 font-medium disabled:opacity-50"
+        className="rounded-full bg-gdg-blue text-white px-6 py-3 font-medium disabled:opacity-50"
       >
         {pending ? "Submitting…" : "Submit application"}
       </button>

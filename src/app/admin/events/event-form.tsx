@@ -73,7 +73,7 @@ export function EventForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-foreground text-background px-6 py-2.5 font-medium self-start disabled:opacity-50"
+        className="rounded-full bg-gdg-blue text-white px-6 py-2.5 font-medium self-start disabled:opacity-50"
       >
         {pending ? "Creating…" : "Create draft event"}
       </button>

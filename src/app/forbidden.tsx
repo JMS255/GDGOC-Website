@@ -7,7 +7,7 @@ export default function Forbidden() {
       <p className="opacity-70 mb-6">
         You&apos;re signed in, but your role doesn&apos;t have access to this page.
       </p>
-      <Link href="/dashboard" className="rounded-full bg-foreground text-background px-6 py-3 font-medium">
+      <Link href="/dashboard" className="rounded-full bg-gdg-blue text-white px-6 py-3 font-medium">
         Back to dashboard
       </Link>
     </div>

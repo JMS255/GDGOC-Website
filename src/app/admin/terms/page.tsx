@@ -44,7 +44,7 @@ export default async function AdminTermsPage() {
           </div>
           <button
             type="submit"
-            className="rounded-full bg-foreground text-background px-6 py-2.5 font-medium self-start"
+            className="rounded-full bg-gdg-blue text-white px-6 py-2.5 font-medium self-start"
           >
             Create term
           </button>

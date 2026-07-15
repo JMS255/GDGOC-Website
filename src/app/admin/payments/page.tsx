@@ -59,7 +59,7 @@ export default async function AdminPaymentsPage() {
                       await approvePayment(proof.id, proof.uid)
                     }}
                   >
-                    <button className="text-sm rounded-full bg-foreground text-background px-4 py-2">
+                    <button className="text-sm rounded-full bg-gdg-green text-white px-4 py-2">
                       Approve
                     </button>
                   </form>
@@ -69,7 +69,7 @@ export default async function AdminPaymentsPage() {
                       await rejectPayment(proof.id)
                     }}
                   >
-                    <button className="text-sm rounded-full border px-4 py-2">Reject</button>
+                    <button className="text-sm rounded-full border-2 border-gdg-red text-gdg-red px-4 py-2">Reject</button>
                   </form>
                 </div>
               </div>

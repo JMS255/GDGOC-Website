@@ -62,7 +62,7 @@ export default async function AdminMerchPage() {
           <input type="number" name="price" placeholder="Price (PHP)" step="0.01" required className="border rounded px-3 py-2" />
           <input name="variants" placeholder="Variants, comma-separated (e.g. S, M, L)" className="border rounded px-3 py-2" />
           <input name="imageURL" placeholder="Image URL (optional)" className="border rounded px-3 py-2" />
-          <button className="rounded-full bg-foreground text-background px-5 py-2 font-medium self-start">
+          <button className="rounded-full bg-gdg-blue text-white px-5 py-2 font-medium self-start">
             Add product
           </button>
         </form>
@@ -135,7 +135,7 @@ export default async function AdminMerchPage() {
                         await setOrderStatus(order.id, "approved")
                       }}
                     >
-                      <button className="text-sm rounded-full bg-foreground text-background px-4 py-2">
+                      <button className="text-sm rounded-full bg-gdg-green text-white px-4 py-2">
                         Approve
                       </button>
                     </form>
@@ -145,7 +145,7 @@ export default async function AdminMerchPage() {
                         await setOrderStatus(order.id, "rejected")
                       }}
                     >
-                      <button className="text-sm rounded-full border px-4 py-2">Reject</button>
+                      <button className="text-sm rounded-full border-2 border-gdg-red text-gdg-red px-4 py-2">Reject</button>
                     </form>
                   </div>
                 </div>
