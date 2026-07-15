@@ -39,3 +39,15 @@ export interface RsvpRecord {
   uid: string
   attended: boolean
 }
+
+export type PaymentProofStatus = "pending" | "approved" | "rejected"
+
+export interface PaymentProofRecord {
+  id: string
+  uid: string
+  memberName: string
+  imageURL: string
+  amount: number | null
+  status: PaymentProofStatus
+  submittedAt: Date
+}

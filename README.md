@@ -89,10 +89,10 @@ Open [http://localhost:3000](http://localhost:3000).
   roles, enforced in Firestore rules + `src/lib/dal.ts`
 - Events: admin create/publish/cancel (`/admin/events`), member RSVP on the
   public events page, manual check-in toggle (`/admin/events/[id]/checkin`)
+- Payment proof: member uploads a GCash screenshot to upgrade to paid tier
+  (`/membership`), admin approves/rejects (`/admin/payments`)
 
 ## What's not built yet (see the original plan for the full roadmap)
-
-- Payment-proof upload/review for the paid tier
 - Renewal flow per term
 - Responsibilities/performance-review accountability system
 - Department position ladder (Member → Staff → Secretary → Subhead → Head)

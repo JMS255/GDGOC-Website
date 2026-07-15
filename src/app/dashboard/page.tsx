@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { requireActiveMember } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { LogoutButton } from "@/components/logout-button"
@@ -44,7 +45,12 @@ export default async function DashboardPage() {
             {user.role.replace("_", " ")} · {user.membershipTier} tier
           </p>
         </div>
-        <LogoutButton />
+        <div className="flex items-center gap-4">
+          <Link href="/membership" className="text-sm underline opacity-70">
+            Membership
+          </Link>
+          <LogoutButton />
+        </div>
       </div>
 
       {orgKpis.length > 0 && (
