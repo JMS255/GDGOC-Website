@@ -105,3 +105,29 @@ export interface PerformanceReviewRecord {
   note: string
   createdAt: Date
 }
+
+export interface ProductRecord {
+  id: string
+  name: string
+  description: string
+  imageURL: string | null
+  price: number
+  variants: string[]
+  isActive: boolean
+}
+
+export type MerchOrderStatus = "pending" | "approved" | "rejected" | "fulfilled"
+
+export interface MerchOrderRecord {
+  id: string
+  buyerName: string
+  buyerContact: string
+  productId: string
+  productName: string
+  variant: string | null
+  quantity: number
+  totalAmount: number
+  proofImageURL: string
+  status: MerchOrderStatus
+  createdAt: Date
+}

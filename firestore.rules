@@ -112,5 +112,20 @@ service cloud.firestore {
       allow read: if isSignedIn();
       allow write: if isChiefExec() || isSystemAdmin();
     }
+
+    match /products/{id} {
+      allow read: if true;
+      allow write: if isDeptHeadOrAbove();
+    }
+
+    // Guest checkout has no auth to scope a rule against, so — unlike every
+    // other collection here — orders are written exclusively through the
+    // server action (Admin SDK, which bypasses rules) after zod validation,
+    // never directly from the client. Locking client writes to false here is
+    // what keeps an unauthenticated flow from being an open write endpoint.
+    match /merchOrders/{id} {
+      allow read: if isDeptHeadOrAbove();
+      allow create, update: if false;
+    }
   }
 }

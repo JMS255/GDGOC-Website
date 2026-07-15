@@ -104,6 +104,18 @@ Open [http://localhost:3000](http://localhost:3000).
   `/dashboard`. Deliberately no rank/position ladder on top of this (deferred
   per the org's decision to keep structure simple — the review/responsibility
   data doesn't preclude adding recognition features later if that changes)
+- Analytics (`/admin/analytics`): membership funnel by status/tier, course and
+  year-level demographics, acquisition channel breakdown, event attendance
+  rate — all aggregated in-memory (fine at ~100 members, no need for a real
+  aggregation pipeline yet)
+- Merch storefront (`/merch`): guest checkout, no account required — GCash
+  proof upload, pre-order model (no stock tracking), admin review
+  (`/admin/merch`). Guest orders are written exclusively through a server
+  action (Firestore rules block direct client writes to `merchOrders`
+  entirely), since there's no auth to scope a client-side rule against
+- Admin quick-links on `/dashboard` for Department Head+ (all admin pages)
+  and Committee+ (membership lookup)
 
-## What's not built yet (see the original plan for the full roadmap)
-- Analytics dashboard
+## What's not built yet
+Nothing from the original roadmap remains — see the deferred items above
+(position ladder, org infrastructure) for what's intentionally on hold.

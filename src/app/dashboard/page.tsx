@@ -1,7 +1,17 @@
 import Link from "next/link"
 import { requireActiveMember } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
+import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE } from "@/lib/types"
 import { LogoutButton } from "@/components/logout-button"
+
+const DEPT_HEAD_LINKS = [
+  { href: "/admin/members", label: "Members" },
+  { href: "/admin/events", label: "Events" },
+  { href: "/admin/payments", label: "Payments" },
+  { href: "/admin/terms", label: "Terms" },
+  { href: "/admin/merch", label: "Merch" },
+  { href: "/admin/analytics", label: "Analytics" },
+]
 
 interface Announcement {
   id: string
@@ -93,6 +103,26 @@ export default async function DashboardPage() {
           <LogoutButton />
         </div>
       </div>
+
+      {(isDeptHeadOrAbove(user.role) || COMMITTEE_OR_ABOVE.includes(user.role)) && (
+        <section className="mb-8 flex flex-wrap gap-2">
+          {isDeptHeadOrAbove(user.role) &&
+            DEPT_HEAD_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm rounded-full border px-4 py-1.5"
+              >
+                {link.label}
+              </Link>
+            ))}
+          {COMMITTEE_OR_ABOVE.includes(user.role) && (
+            <Link href="/lookup" className="text-sm rounded-full border px-4 py-1.5">
+              Lookup
+            </Link>
+          )}
+        </section>
+      )}
 
       {orgKpis.length > 0 && (
         <section className="mb-8 grid grid-cols-2 gap-3">

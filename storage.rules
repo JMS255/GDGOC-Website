@@ -22,5 +22,14 @@ service firebase.storage {
         && request.resource.size < 5 * 1024 * 1024
         && request.resource.contentType.matches("image/.*");
     }
+
+    // Guest merch checkout has no account to scope against — write is open
+    // (size/type restricted) by necessity, same tradeoff accepted for the
+    // guest-checkout decision. Only admins can read it back for order review.
+    match /merchOrders/{fileName} {
+      allow read: if isDeptHeadOrAbove();
+      allow write: if request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches("image/.*");
+    }
   }
 }

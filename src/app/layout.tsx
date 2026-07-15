@@ -45,6 +45,7 @@ export default function RootLayout({
             </Link>
             <div className="flex items-center gap-6 text-sm">
               <Link href="/events">Events</Link>
+              <Link href="/merch">Merch</Link>
               <Link href="/about">About</Link>
               <Link href="/login">Login</Link>
             </div>
