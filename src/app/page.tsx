@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { GdgDots } from "@/components/gdg-dots"
+import { DEPARTMENTS } from "@/lib/types"
+import { DEPARTMENT_INFO, DEPARTMENT_COLOR } from "@/lib/department-info"
 
 const FEATURES = [
   {
@@ -71,13 +73,44 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-6 pb-24 grid sm:grid-cols-3 gap-6">
+      <div className="relative max-w-4xl mx-auto px-6 pb-16 grid sm:grid-cols-3 gap-6">
         {FEATURES.map((f) => (
           <div key={f.title} className="border-t-4 rounded-lg p-5 border" style={{ borderTopColor: f.color }}>
             <h2 className="font-semibold mb-1">{f.title}</h2>
             <p className="text-sm opacity-70">{f.description}</p>
           </div>
         ))}
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-6 pb-24">
+        <h2 className="text-2xl font-bold text-center mb-2">Find where you fit</h2>
+        <p className="text-center opacity-70 mb-8 max-w-lg mx-auto">
+          Six departments, six different ways to get involved — pick whichever matches what
+          you&apos;re actually good at.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {DEPARTMENTS.map((dept) => {
+            const info = DEPARTMENT_INFO[dept]
+            const color = DEPARTMENT_COLOR[dept]
+            return (
+              <div key={dept} className="border rounded-lg p-4">
+                <span
+                  className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-2 py-0.5 mb-2 text-black"
+                  style={{ backgroundColor: color }}
+                >
+                  {dept}
+                </span>
+                <p className="font-medium mb-1">{info.label}</p>
+                <p className="text-sm opacity-70">{info.description}</p>
+              </div>
+            )
+          })}
+        </div>
+        <div className="text-center mt-8">
+          <Link href="/apply" className="rounded-full bg-gdg-blue text-white px-8 py-3.5 font-medium">
+            Apply Now
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -44,6 +44,15 @@ export const DEPARTMENT_INFO: Record<Department, DepartmentInfo> = {
   },
 }
 
+export const DEPARTMENT_COLOR: Record<Department, string> = {
+  Creative: "var(--gdg-red)",
+  "Tech & Docu": "var(--gdg-blue)",
+  Events: "var(--gdg-yellow)",
+  Logistics: "var(--gdg-green)",
+  Finance: "var(--gdg-blue-halftone)",
+  "PR/Marketing": "var(--gdg-red-halftone)",
+}
+
 export const ALL_SKILLS = DEPARTMENTS.flatMap((dept) => DEPARTMENT_INFO[dept].skills)
 
 export const COURSES = [

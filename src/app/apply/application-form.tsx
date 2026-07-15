@@ -1,18 +1,9 @@
 "use client"
 
 import { useActionState, useState } from "react"
-import { DEPARTMENTS, type Department } from "@/lib/types"
-import { DEPARTMENT_INFO, COURSES, YEAR_LEVELS } from "./department-info"
+import { DEPARTMENTS } from "@/lib/types"
+import { DEPARTMENT_INFO, DEPARTMENT_COLOR, COURSES, YEAR_LEVELS } from "@/lib/department-info"
 import { submitApplication } from "./actions"
-
-const DEPARTMENT_COLOR: Record<Department, string> = {
-  Creative: "var(--gdg-red)",
-  "Tech & Docu": "var(--gdg-blue)",
-  Events: "var(--gdg-yellow)",
-  Logistics: "var(--gdg-green)",
-  Finance: "var(--gdg-blue-halftone)",
-  "PR/Marketing": "var(--gdg-red-halftone)",
-}
 
 export function ApplicationForm() {
   const [state, action, pending] = useActionState(submitApplication, undefined)

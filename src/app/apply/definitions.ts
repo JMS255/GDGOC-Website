@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { ALL_SKILLS } from "./department-info"
+import { ALL_SKILLS } from "@/lib/department-info"
 
 const ALLOWED_EMAIL_DOMAIN = process.env.NEXT_PUBLIC_ALLOWED_EMAIL_DOMAIN ?? ""
 
