@@ -8,14 +8,14 @@ interface DepartmentInfo {
 
 export const DEPARTMENT_INFO: Record<Department, DepartmentInfo> = {
   Creative: {
-    label: "UI/UX & Graphic Design",
-    description: "Designs everything members and the public actually see — posters, decks, the app itself.",
-    skills: ["Graphic Design", "UI/UX Design", "Video Editing", "Photography"],
+    label: "Graphic Design & Merch",
+    description: "Designs everything members and the public actually see — posters, decks, and the merch itself.",
+    skills: ["Graphic Design", "Merch Design", "Video Editing", "Photography"],
   },
   "Tech & Docu": {
-    label: "Coding & App Dev",
-    description: "Builds and documents the technical projects GDGoC ships.",
-    skills: ["Web Development", "Mobile Development", "Backend / Database", "Technical Writing / Documentation"],
+    label: "Documentation",
+    description: "Documents GDGoC's sessions, processes, and technical work — keeps the org's knowledge base up to date.",
+    skills: ["Technical Writing / Documentation", "Session Notes / Recaps", "Knowledge Base Management"],
   },
   Events: {
     label: "Organizing Events & Hosting",
