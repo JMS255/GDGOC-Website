@@ -53,7 +53,7 @@ export default async function AdminApplicationsPage() {
             <li key={app.id}>
               <Link
                 href={`/admin/applications/${app.id}`}
-                className="block border rounded-lg p-4 hover:bg-black/5 dark:hover:bg-white/5"
+                className="block border rounded-lg p-4 hover:bg-black/5"
               >
                 <p className="font-medium">{app.fullName}</p>
                 <p className="text-sm opacity-60">

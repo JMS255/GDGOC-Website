@@ -34,10 +34,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      style={{ colorScheme: "light" }}
       className={`${googleSans.variable} ${googleSansMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <header className="sticky top-0 z-10 bg-background border-b border-black/10 dark:border-white/15">
+        <header className="sticky top-0 z-10 bg-background border-b border-black/10">
           <nav className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 font-bold tracking-tight">
               <GdgDots />
@@ -63,7 +64,7 @@ export default function RootLayout({
           </nav>
         </header>
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-black/10 dark:border-white/15 py-10">
+        <footer className="border-t border-black/10 py-10">
           <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row justify-between gap-6 text-sm">
             <div className="flex items-center gap-2 font-medium">
               <GdgDots />

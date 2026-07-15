@@ -40,7 +40,7 @@ export default async function AdminMembersPage() {
             <li key={member.uid}>
               <Link
                 href={`/admin/members/${member.uid}`}
-                className="border rounded-lg p-3 flex items-center justify-between hover:bg-black/5 dark:hover:bg-white/5"
+                className="border rounded-lg p-3 flex items-center justify-between hover:bg-black/5"
               >
                 <span className="font-medium">{member.displayName ?? member.email}</span>
                 <span className="text-sm opacity-60">{member.email}</span>

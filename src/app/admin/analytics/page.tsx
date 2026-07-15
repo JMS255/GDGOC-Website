@@ -102,7 +102,7 @@ function MagnitudeBar({ rows, barColor = "#4285F4" }: { rows: CountRow[]; barCol
       {rows.map((row) => (
         <li key={row.label} className="flex items-center gap-3 text-sm">
           <span className="w-28 shrink-0 truncate">{row.label}</span>
-          <div className="flex-1 h-4 rounded bg-black/5 dark:bg-white/10 overflow-hidden">
+          <div className="flex-1 h-4 rounded bg-black/5 overflow-hidden">
             <div
               className="h-full rounded"
               style={{ width: `${(row.count / max) * 100}%`, backgroundColor: barColor }}
@@ -135,7 +135,7 @@ export default async function AdminAnalyticsPage() {
           {statusRows.map((row) => (
             <li key={row.label} className="flex items-center gap-3 text-sm">
               <span className="w-20 shrink-0 capitalize">{row.label}</span>
-              <div className="flex-1 h-4 rounded bg-black/5 dark:bg-white/10 overflow-hidden">
+              <div className="flex-1 h-4 rounded bg-black/5 overflow-hidden">
                 <div
                   className="h-full rounded"
                   style={{ width: `${(row.count / total) * 100}%`, backgroundColor: row.color }}
@@ -189,7 +189,7 @@ export default async function AdminAnalyticsPage() {
                       {event.attendedCount}/{event.rsvpCount} attended ({rate}%)
                     </span>
                   </div>
-                  <div className="h-4 rounded bg-black/5 dark:bg-white/10 overflow-hidden">
+                  <div className="h-4 rounded bg-black/5 overflow-hidden">
                     <div
                       className="h-full rounded bg-gdg-green"
                       style={{ width: `${rate}%` }}

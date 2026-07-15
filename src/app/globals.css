@@ -43,12 +43,10 @@
   --color-gdg-red-pastel: var(--gdg-red-pastel);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: var(--gdg-off-white);
-  }
-}
+/* Deliberately no dark-mode override — GDG's own site and the brand palette
+   are designed for a light/white background (that's where the four-color
+   accents actually pop), so the site stays light regardless of the
+   visitor's OS-level dark mode preference. */
 
 body {
   background: var(--background);

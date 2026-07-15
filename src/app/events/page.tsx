@@ -49,7 +49,7 @@ export default async function EventsPage() {
           {events.map((event) => {
             const hasRsvped = rsvpedEventIds.has(event.id)
             return (
-              <li key={event.id} className="border border-black/10 dark:border-white/15 rounded-lg p-4">
+              <li key={event.id} className="border border-black/10 rounded-lg p-4">
                 <h2 className="font-semibold">{event.title}</h2>
                 <p className="text-sm opacity-70">
                   {event.startsAt} · {event.location}

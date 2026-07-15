@@ -1,6 +1,6 @@
 export default function PrivacyPolicyPage() {
   return (
-    <div className="max-w-2xl mx-auto px-4 py-16 prose prose-sm dark:prose-invert">
+    <div className="max-w-2xl mx-auto px-4 py-16 prose prose-sm">
       <h1>Privacy Policy</h1>
       <p className="opacity-70 text-sm">
         This policy is a starting draft covering the Philippine Data Privacy Act of 2012
