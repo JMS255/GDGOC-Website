@@ -94,6 +94,9 @@ Open [http://localhost:3000](http://localhost:3000).
 - Renewal per term: admin creates/activates a term (`/admin/terms`); members
   see a renewal prompt on `/membership` — one-click for free tier, payment
   proof for paid tier, tracked in `membershipRenewals`
+- Membership lookup (`/lookup`): read-only name/email search for Committee
+  and above — for verifying membership (e.g. at an event door) without full
+  admin dashboard access
 
 ## What's not built yet (see the original plan for the full roadmap)
 - Responsibilities/performance-review accountability system

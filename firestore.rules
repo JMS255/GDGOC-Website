@@ -29,6 +29,13 @@ service cloud.firestore {
       return isSignedIn() && getRole() in ["chief_exec", "system_admin", "department_head"];
     }
 
+    // Committee ("Event Support") otherwise has no dashboard access — this is
+    // the one read-only exception, for the membership lookup tool.
+    function isCommitteeOrAbove() {
+      return isSignedIn() &&
+        getRole() in ["chief_exec", "system_admin", "department_head", "committee"];
+    }
+
     function isActiveMember() {
       return isSignedIn() && getUserDoc(request.auth.uid).membershipStatus == "active";
     }
@@ -39,7 +46,7 @@ service cloud.firestore {
 
     // --- users: role/status are admin-managed only, never self-writable ---
     match /users/{uid} {
-      allow read: if isOwner(uid) || isDeptHeadOrAbove();
+      allow read: if isOwner(uid) || isCommitteeOrAbove();
       // Role reassignment is Chief Exec only; everything else about a user
       // (status, tier) is written via reviewed admin actions, never by the
       // client directly — see server-side API routes.

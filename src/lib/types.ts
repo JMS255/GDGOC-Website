@@ -20,6 +20,16 @@ export function isDeptHeadOrAbove(role: Role): boolean {
   return DEPT_HEAD_OR_ABOVE.includes(role)
 }
 
+// Committee ("Event Support") members otherwise have zero dashboard access —
+// this is the one read-only exception, for verifying membership (e.g. at an
+// event door) without needing the full admin dashboard.
+export const COMMITTEE_OR_ABOVE: Role[] = [
+  "chief_exec",
+  "system_admin",
+  "department_head",
+  "committee",
+]
+
 // Term creation/activation is org-wide policy, not a per-department action —
 // scoped to chief_exec/system_admin only, same boundary as orgKpis.
 export const TERM_MANAGERS: Role[] = ["chief_exec", "system_admin"]
