@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { signInWithPopup, signOut } from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase/client"
 
@@ -30,8 +31,8 @@ export default function LoginPage() {
         return
       }
 
-      const { isNewUser } = await response.json()
-      router.push(isNewUser ? "/signup" : "/dashboard")
+      await response.json()
+      router.push("/dashboard")
       router.refresh()
     } catch {
       setError("Something went wrong signing in. Please try again.")
@@ -44,7 +45,7 @@ export default function LoginPage() {
     <div className="max-w-sm mx-auto px-4 py-24 flex flex-col items-center gap-6 text-center">
       <h1 className="text-2xl font-bold">Sign in to GDGoC</h1>
       <p className="text-sm opacity-70">
-        Use your Adzu Google account (@adzu.edu.ph) to sign in or apply for membership.
+        Already an approved member? Sign in with your Adzu Google account (@adzu.edu.ph).
       </p>
       <button
         onClick={handleGoogleSignIn}
@@ -54,6 +55,12 @@ export default function LoginPage() {
         {isSigningIn ? "Signing in…" : "Sign in with Google"}
       </button>
       {error && <p className="text-sm text-red-600">{error}</p>}
+      <p className="text-sm opacity-70">
+        Haven&apos;t applied yet?{" "}
+        <Link href="/apply" className="underline">
+          Apply here
+        </Link>
+      </p>
     </div>
   )
 }

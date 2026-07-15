@@ -1,11 +1,31 @@
 "use client"
 
 import { useActionState } from "react"
-import Link from "next/link"
-import { submitProfile } from "./actions"
+import { DEPARTMENTS } from "@/lib/types"
+import { submitApplication } from "./actions"
 
-export function SignupForm() {
-  const [state, action, pending] = useActionState(submitProfile, undefined)
+const INTEREST_LABELS: Record<(typeof DEPARTMENTS)[number], string> = {
+  Events: "Organizing Events & Hosting",
+  Creatives: "UI/UX & Graphic Design",
+  "Tech & Docu": "Coding & App Dev",
+  "PR & Marketing": "Writing & Social Media",
+  Finance: "Budgets & Money Management",
+}
+
+export function ApplicationForm() {
+  const [state, action, pending] = useActionState(submitApplication, undefined)
+  const isSubmitted = state !== undefined && !state.errors
+
+  if (isSubmitted) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-xl font-bold mb-2">Application received</h2>
+        <p className="opacity-70">
+          Our team will review your profile and reach out to schedule a quick interview.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <form action={action} className="flex flex-col gap-4 max-w-md">
@@ -15,6 +35,14 @@ export function SignupForm() {
         </label>
         <input id="fullName" name="fullName" className="w-full border rounded px-3 py-2" />
         {state?.errors?.fullName && <p className="text-sm text-red-600">{state.errors.fullName}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="email" className="text-sm font-medium">
+          Adzu email
+        </label>
+        <input id="email" name="email" type="email" className="w-full border rounded px-3 py-2" />
+        {state?.errors?.email && <p className="text-sm text-red-600">{state.errors.email}</p>}
       </div>
 
       <div>
@@ -58,33 +86,23 @@ export function SignupForm() {
         )}
       </div>
 
-      <div>
-        <label htmlFor="interests" className="text-sm font-medium">
-          Interests (comma-separated, e.g. web-dev, ml, design)
-        </label>
-        <input id="interests" name="interests" className="w-full border rounded px-3 py-2" />
+      <fieldset>
+        <legend className="text-sm font-medium mb-2">What are you interested in?</legend>
+        <div className="flex flex-col gap-2">
+          {DEPARTMENTS.map((dept) => (
+            <label key={dept} className="flex items-center gap-2 text-sm">
+              <input type="checkbox" name="interests" value={dept} />
+              {INTEREST_LABELS[dept]}
+            </label>
+          ))}
+        </div>
         {state?.errors?.interests && <p className="text-sm text-red-600">{state.errors.interests}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="hearAboutUs" className="text-sm font-medium">
-          How did you hear about GDGoC?
-        </label>
-        <input id="hearAboutUs" name="hearAboutUs" className="w-full border rounded px-3 py-2" />
-        {state?.errors?.hearAboutUs && (
-          <p className="text-sm text-red-600">{state.errors.hearAboutUs}</p>
-        )}
-      </div>
+      </fieldset>
 
       <label className="flex items-start gap-2 text-sm">
         <input type="checkbox" name="consentGiven" className="mt-1" />
         <span>
-          I consent to GDGoC collecting and storing this information for membership
-          processing, in line with the{" "}
-          <Link href="/privacy-policy" className="underline">
-            Privacy Policy
-          </Link>
-          .
+          I consent to GDGoC collecting and storing this information for membership processing.
         </span>
       </label>
       {state?.errors?.consentGiven && (

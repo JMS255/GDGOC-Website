@@ -127,5 +127,15 @@ service cloud.firestore {
       allow read: if isDeptHeadOrAbove();
       allow create, update: if false;
     }
+
+    // Membership applications: submitted before any account exists, so same
+    // pattern as merchOrders — no auth to scope a client rule against, write
+    // exclusively through the server action after zod validation (including
+    // the @adzu.edu.ph domain check, done manually here since there's no
+    // Firebase Auth token yet to rely on for that).
+    match /applications/{id} {
+      allow read: if isDeptHeadOrAbove();
+      allow create, update: if false;
+    }
   }
 }

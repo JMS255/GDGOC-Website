@@ -5,6 +5,7 @@ import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE } from "@/lib/types"
 import { LogoutButton } from "@/components/logout-button"
 
 const DEPT_HEAD_LINKS = [
+  { href: "/admin/applications", label: "Applications" },
   { href: "/admin/members", label: "Members" },
   { href: "/admin/events", label: "Events" },
   { href: "/admin/payments", label: "Payments" },

@@ -11,6 +11,11 @@ const ALLOWED_EMAIL_DOMAIN = process.env.NEXT_PUBLIC_ALLOWED_EMAIL_DOMAIN ?? ""
  * Google sign-in `hd` parameter (see lib/firebase/client.ts) is cosmetic only
  * and can be bypassed, so every sign-in must be re-checked here server-side
  * against the verified token before a session is ever created.
+ *
+ * Account creation is also gated here: signing in does NOT get you an
+ * account by itself. You must first apply at /apply (no login required),
+ * get interviewed, and have your application approved — only THEN does
+ * your first sign-in create an active account, matched by email.
  */
 export async function POST(request: Request) {
   const { idToken } = await request.json()
@@ -43,19 +48,56 @@ export async function POST(request: Request) {
   const isNewUser = !existing.exists
 
   if (isNewUser) {
+    const approvedApplication = await adminDb
+      .collection("applications")
+      .where("email", "==", email)
+      .where("status", "==", "approved")
+      .limit(1)
+      .get()
+
+    if (approvedApplication.empty) {
+      // No approved application for this email — sign-in itself is blocked.
+      // Applying comes first; an account is only ever created for someone
+      // who's already been interviewed and approved.
+      await adminAuth.deleteUser(decoded.uid).catch(() => {})
+      return NextResponse.json(
+        { error: "No approved application found for this email. Apply at /apply first." },
+        { status: 403 }
+      )
+    }
+
+    const applicationDoc = approvedApplication.docs[0]
+    const application = applicationDoc.data()
+
     await userRef.set({
       email,
-      displayName: decoded.name ?? null,
+      displayName: decoded.name ?? application.fullName ?? null,
       photoURL: decoded.picture ?? null,
       role: "member",
       department: null,
-      membershipStatus: "pending",
+      membershipStatus: "active",
       membershipTier: "free",
       deletionRequested: false,
       deletionRequestedAt: null,
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     })
+
+    await adminDb.collection("memberProfiles").doc(decoded.uid).set({
+      fullName: application.fullName,
+      studentId: application.studentId,
+      course: application.course,
+      yearLevel: application.yearLevel,
+      contactNumber: application.contactNumber,
+      interests: application.interests,
+      hearAboutUs: "",
+      consentGiven: true,
+      consentTimestamp: FieldValue.serverTimestamp(),
+      interviewNotes: application.interviewNotes ?? "",
+      submittedAt: FieldValue.serverTimestamp(),
+    })
+
+    await applicationDoc.ref.update({ status: "converted", convertedUid: decoded.uid })
   }
 
   await createSession(idToken)

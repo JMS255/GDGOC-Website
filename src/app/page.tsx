@@ -13,10 +13,10 @@ export default function Home() {
         technologies — through events, workshops, and hands-on projects.
       </p>
       <Link
-        href="/login"
+        href="/apply"
         className="rounded-full bg-foreground text-background px-8 py-3.5 font-medium"
       >
-        Sign up
+        Apply Now
       </Link>
       <Link href="/events" className="text-sm underline opacity-70">
         See upcoming events

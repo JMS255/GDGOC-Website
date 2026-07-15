@@ -65,16 +65,39 @@ Open [http://localhost:3000](http://localhost:3000).
 > error without valid Firebase Admin credentials in `.env.local` — this is
 > expected until step 3 above is done.
 
-## How auth works here
+## How membership actually works here
 
-- Login (`/login`) uses Firebase's client SDK for Google Sign-In, then POSTs
-  the ID token to `POST /api/auth/session`.
-- That route is the **only place the `@adzu.edu.ph` domain restriction is
-  actually enforced** — it re-verifies the token server-side and rejects (and
-  deletes) any account outside the allowed domain. The client-side Google
-  picker's domain hint is cosmetic only and must never be trusted alone.
-- On first sign-in, a `users/{uid}` Firestore doc is created with
-  `membershipStatus: "pending"`.
+**Applying and signing in are two separate steps, in a specific order.**
+Signing in with Google does NOT by itself get you an account — you have to
+apply first.
+
+1. Anyone applies at `/apply` (no login required) — name, email, student ID,
+   course, year, contact number, interests. Creates an `applications` doc
+   with `status: "new"`.
+2. Department Heads review applications relevant to their department
+   (`/admin/applications` — filtered by whether the applicant's `interests`
+   array includes that head's `department`; Chief Exec/System Admin see all),
+   add interview notes/a rating, and Approve or Reject.
+3. Only once approved does the applicant's *first Google sign-in* actually
+   create an account. `POST /api/auth/session` looks up an `applications` doc
+   matching the signed-in email with `status: "approved"` — if none exists,
+   the sign-in is rejected outright (and the just-created Firebase Auth user
+   is deleted) with a message pointing them to `/apply`. If a match exists,
+   the account is created directly as `membershipStatus: "active"` (no
+   separate pending step — the interview already happened at the application
+   stage), `memberProfiles` is populated from the application data, and the
+   application is marked `status: "converted"`.
+
+This means `membershipStatus: "pending"` on a `users` doc can no longer
+actually occur through normal sign-up — the type still allows it (existing
+`/pending` page still serves member accounts that later go `expired`/
+`rejected`, e.g. a lapsed renewal), but new applicants are gated at the
+`applications` stage, before any account exists.
+
+- `POST /api/auth/session` is also the **only place the `@adzu.edu.ph` domain
+  restriction is enforced** — re-verifies the token server-side and rejects
+  (and deletes) any account outside the allowed domain; the client-side
+  Google picker's domain hint is cosmetic only.
 - Every protected page checks auth/role itself via `src/lib/dal.ts`
   (`requireActiveMember()`, `requireRole()`) rather than in a shared layout —
   Next.js's own docs warn that layout-level checks don't re-run on
@@ -84,7 +107,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - Public: landing, about, events listing, privacy policy
 - Auth: Google sign-in restricted to the university domain, session cookies
-- Membership: signup → pending → admin approval flow (`/admin/members`)
+- Membership: public application (`/apply`, no login) → department-routed
+  interview review (`/admin/applications`) → approval gates first sign-in,
+  which creates an already-active account (see "How membership actually
+  works" above)
 - RBAC: `chief_exec`, `system_admin`, `department_head`, `committee`, `member`
   roles, enforced in Firestore rules + `src/lib/dal.ts`
 - Events: admin create/publish/cancel (`/admin/events`), member RSVP on the
