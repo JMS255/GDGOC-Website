@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function getRole() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function isDeptHeadOrAbove() {
+      return isSignedIn() && getRole() in ["chief_exec", "system_admin", "department_head"];
+    }
+
+    // Payment proof screenshots: owner can upload their own, admins can view all for review.
+    match /paymentProofs/{uid}/{fileName} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isDeptHeadOrAbove());
+      allow write: if isSignedIn() && request.auth.uid == uid
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches("image/.*");
+    }
+  }
+}

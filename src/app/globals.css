@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1e1e1e;
+
+  /* GDG brand palette (from Google's official GDG brand guidelines) */
+  --gdg-blue: #4285f4;
+  --gdg-green: #34a853;
+  --gdg-yellow: #f9ab00;
+  --gdg-red: #ea4335;
+
+  --gdg-blue-halftone: #57caff;
+  --gdg-green-halftone: #5cdb6d;
+  --gdg-yellow-halftone: #ffd427;
+  --gdg-red-halftone: #ff7daf;
+
+  --gdg-blue-pastel: #c3ecf6;
+  --gdg-green-pastel: #ccf6c5;
+  --gdg-yellow-pastel: #ffe7a5;
+  --gdg-red-pastel: #f8d8d8;
+
+  --gdg-off-white: #f0f0f0;
+  --gdg-black: #1e1e1e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-google-sans);
+
+  --color-gdg-blue: var(--gdg-blue);
+  --color-gdg-green: var(--gdg-green);
+  --color-gdg-yellow: var(--gdg-yellow);
+  --color-gdg-red: var(--gdg-red);
+  --color-gdg-blue-halftone: var(--gdg-blue-halftone);
+  --color-gdg-green-halftone: var(--gdg-green-halftone);
+  --color-gdg-yellow-halftone: var(--gdg-yellow-halftone);
+  --color-gdg-red-halftone: var(--gdg-red-halftone);
+  --color-gdg-blue-pastel: var(--gdg-blue-pastel);
+  --color-gdg-green-pastel: var(--gdg-green-pastel);
+  --color-gdg-yellow-pastel: var(--gdg-yellow-pastel);
+  --color-gdg-red-pastel: var(--gdg-red-pastel);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: var(--gdg-off-white);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
