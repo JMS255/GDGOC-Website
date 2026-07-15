@@ -30,12 +30,12 @@ export default async function AdminPaymentsPage() {
   const proofs = await getPendingProofs()
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold mb-6">Payment Proofs</h1>
       {proofs.length === 0 ? (
         <p className="opacity-60">Nothing pending review.</p>
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul className="grid sm:grid-cols-2 gap-4">
           {proofs.map((proof) => (
             <li key={proof.id} className="border rounded-lg p-4 flex gap-4">
               <a href={proof.imageURL} target="_blank" rel="noopener noreferrer" className="shrink-0">

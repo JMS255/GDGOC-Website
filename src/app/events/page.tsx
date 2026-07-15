@@ -40,12 +40,12 @@ export default async function EventsPage() {
   const rsvpedEventIds = user ? await getRsvpedEventIds(user.uid) : new Set<string>()
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-16">
+    <div className="max-w-5xl mx-auto px-4 py-16">
       <h1 className="text-2xl font-bold mb-6">Events</h1>
       {events.length === 0 ? (
         <p className="opacity-70">No events published yet — check back soon.</p>
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {events.map((event) => {
             const hasRsvped = rsvpedEventIds.has(event.id)
             return (

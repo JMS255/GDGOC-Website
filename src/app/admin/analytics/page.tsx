@@ -125,13 +125,13 @@ export default async function AdminAnalyticsPage() {
   ])
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
+    <div className="max-w-5xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold mb-1">Analytics</h1>
       <p className="text-sm opacity-70 mb-10">{total} total accounts</p>
 
       <section className="mb-10">
         <h2 className="font-semibold mb-3">Membership status</h2>
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-2 max-w-2xl">
           {statusRows.map((row) => (
             <li key={row.label} className="flex items-center gap-3 text-sm">
               <span className="w-20 shrink-0 capitalize">{row.label}</span>
@@ -147,36 +147,38 @@ export default async function AdminAnalyticsPage() {
         </ul>
       </section>
 
-      <section className="mb-10">
-        <h2 className="font-semibold mb-3">Membership tier</h2>
-        <MagnitudeBar rows={tierRows} />
-      </section>
+      <div className="grid md:grid-cols-2 gap-x-10 gap-y-10">
+        <section>
+          <h2 className="font-semibold mb-3">Membership tier</h2>
+          <MagnitudeBar rows={tierRows} />
+        </section>
 
-      <section className="mb-10">
-        <h2 className="font-semibold mb-3">Course</h2>
-        {courseRows.length === 0 ? <p className="text-sm opacity-60">No profile data yet.</p> : <MagnitudeBar rows={courseRows} />}
-      </section>
+        <section>
+          <h2 className="font-semibold mb-3">Course</h2>
+          {courseRows.length === 0 ? <p className="text-sm opacity-60">No profile data yet.</p> : <MagnitudeBar rows={courseRows} />}
+        </section>
 
-      <section className="mb-10">
-        <h2 className="font-semibold mb-3">Year level</h2>
-        {yearRows.length === 0 ? <p className="text-sm opacity-60">No profile data yet.</p> : <MagnitudeBar rows={yearRows} />}
-      </section>
+        <section>
+          <h2 className="font-semibold mb-3">Year level</h2>
+          {yearRows.length === 0 ? <p className="text-sm opacity-60">No profile data yet.</p> : <MagnitudeBar rows={yearRows} />}
+        </section>
 
-      <section className="mb-10">
-        <h2 className="font-semibold mb-3">How members heard about GDGoC</h2>
-        {channelRows.length === 0 ? (
-          <p className="text-sm opacity-60">No profile data yet.</p>
-        ) : (
-          <MagnitudeBar rows={channelRows} />
-        )}
-      </section>
+        <section>
+          <h2 className="font-semibold mb-3">How members heard about GDGoC</h2>
+          {channelRows.length === 0 ? (
+            <p className="text-sm opacity-60">No profile data yet.</p>
+          ) : (
+            <MagnitudeBar rows={channelRows} />
+          )}
+        </section>
+      </div>
 
-      <section>
+      <section className="mt-10">
         <h2 className="font-semibold mb-3">Event attendance</h2>
         {eventRows.length === 0 ? (
           <p className="text-sm opacity-60">No events with RSVPs yet.</p>
         ) : (
-          <ul className="flex flex-col gap-3">
+          <ul className="grid md:grid-cols-2 gap-x-10 gap-y-3">
             {eventRows.map((event) => {
               const rate = event.rsvpCount > 0 ? Math.round((event.attendedCount / event.rsvpCount) * 100) : 0
               return (

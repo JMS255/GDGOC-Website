@@ -50,12 +50,13 @@ export default async function AdminMerchPage() {
   const [products, pendingOrders] = await Promise.all([getProducts(), getPendingOrders()])
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-5xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold mb-6">Merch</h1>
 
       <section className="mb-10">
         <h2 className="font-semibold mb-3">Products</h2>
-        <form action={createProduct} className="flex flex-col gap-2 mb-6 max-w-sm">
+        <div className="grid lg:grid-cols-[320px_1fr] gap-10">
+        <form action={createProduct} className="flex flex-col gap-2">
           <input name="name" placeholder="Product name" required className="border rounded px-3 py-2" />
           <textarea name="description" placeholder="Description" className="border rounded px-3 py-2" />
           <input type="number" name="price" placeholder="Price (PHP)" step="0.01" required className="border rounded px-3 py-2" />
@@ -66,7 +67,7 @@ export default async function AdminMerchPage() {
           </button>
         </form>
 
-        <ul className="flex flex-col gap-2">
+        <ul className="grid sm:grid-cols-2 gap-2 content-start">
           {products.map((product) => (
             <li key={product.id} className="border rounded-lg p-3 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -98,6 +99,7 @@ export default async function AdminMerchPage() {
             </li>
           ))}
         </ul>
+        </div>
       </section>
 
       <section>
@@ -105,7 +107,7 @@ export default async function AdminMerchPage() {
         {pendingOrders.length === 0 ? (
           <p className="text-sm opacity-60">Nothing pending review.</p>
         ) : (
-          <ul className="flex flex-col gap-4">
+          <ul className="grid sm:grid-cols-2 gap-4">
             {pendingOrders.map((order) => (
               <li key={order.id} className="border rounded-lg p-4 flex gap-4">
                 <a href={order.proofImageURL} target="_blank" rel="noopener noreferrer" className="shrink-0">

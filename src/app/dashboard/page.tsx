@@ -88,7 +88,7 @@ export default async function DashboardPage() {
   ])
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold">Welcome, {user.displayName ?? user.email}</h1>
@@ -125,7 +125,7 @@ export default async function DashboardPage() {
       )}
 
       {orgKpis.length > 0 && (
-        <section className="mb-8 grid grid-cols-2 gap-3">
+        <section className="mb-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
           {orgKpis.map((kpi) => (
             <div key={kpi.id} className="border rounded-lg p-4">
               <p className="text-xs opacity-60">{kpi.label}</p>
@@ -135,48 +135,50 @@ export default async function DashboardPage() {
         </section>
       )}
 
-      {(openResponsibilities.length > 0 || latestReview) && (
-        <section className="mb-8">
-          {openResponsibilities.length > 0 && (
-            <div className="mb-4">
-              <h2 className="font-semibold mb-3">Your Responsibilities</h2>
-              <ul className="flex flex-col gap-2">
-                {openResponsibilities.map((r) => (
-                  <li key={r.id} className="border rounded-lg p-3">
-                    <p className="font-medium">{r.title}</p>
-                    {r.dueDate && <p className="text-xs opacity-60">Due {r.dueDate}</p>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {latestReview && (
-            <div>
-              <h2 className="font-semibold mb-3">Latest Review</h2>
-              <div className="border rounded-lg p-3">
-                <p className="font-medium">Rating: {latestReview.rating}/5</p>
-                {latestReview.note && <p className="text-sm opacity-80">{latestReview.note}</p>}
-              </div>
-            </div>
+      <div className="grid lg:grid-cols-2 gap-8">
+        <section>
+          <h2 className="font-semibold mb-3">Announcements</h2>
+          {announcements.length === 0 ? (
+            <p className="text-sm opacity-60">Nothing posted yet.</p>
+          ) : (
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              {announcements.map((a) => (
+                <li key={a.id} className="border rounded-lg p-4">
+                  <p className="font-medium">{a.title}</p>
+                  <p className="text-sm opacity-80">{a.body}</p>
+                </li>
+              ))}
+            </ul>
           )}
         </section>
-      )}
 
-      <section>
-        <h2 className="font-semibold mb-3">Announcements</h2>
-        {announcements.length === 0 ? (
-          <p className="text-sm opacity-60">Nothing posted yet.</p>
-        ) : (
-          <ul className="flex flex-col gap-3">
-            {announcements.map((a) => (
-              <li key={a.id} className="border rounded-lg p-4">
-                <p className="font-medium">{a.title}</p>
-                <p className="text-sm opacity-80">{a.body}</p>
-              </li>
-            ))}
-          </ul>
+        {(openResponsibilities.length > 0 || latestReview) && (
+          <section>
+            {openResponsibilities.length > 0 && (
+              <div className="mb-6">
+                <h2 className="font-semibold mb-3">Your Responsibilities</h2>
+                <ul className="grid sm:grid-cols-2 lg:grid-cols-1 gap-2">
+                  {openResponsibilities.map((r) => (
+                    <li key={r.id} className="border rounded-lg p-3">
+                      <p className="font-medium">{r.title}</p>
+                      {r.dueDate && <p className="text-xs opacity-60">Due {r.dueDate}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {latestReview && (
+              <div>
+                <h2 className="font-semibold mb-3">Latest Review</h2>
+                <div className="border rounded-lg p-3">
+                  <p className="font-medium">Rating: {latestReview.rating}/5</p>
+                  {latestReview.note && <p className="text-sm opacity-80">{latestReview.note}</p>}
+                </div>
+              </div>
+            )}
+          </section>
         )}
-      </section>
+      </div>
     </div>
   )
 }

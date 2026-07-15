@@ -45,11 +45,11 @@ export default async function LookupPage({
   const results = q ? await searchMembers(q) : []
 
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold mb-1">Membership Lookup</h1>
       <p className="text-sm opacity-70 mb-6">Search by name or email to verify membership.</p>
 
-      <form className="flex gap-2 mb-8">
+      <form className="flex gap-2 mb-8 max-w-md">
         <input
           type="text"
           name="q"
@@ -65,7 +65,7 @@ export default async function LookupPage({
       {q && results.length === 0 && <p className="opacity-60">No matches found.</p>}
 
       {results.length > 0 && (
-        <ul className="flex flex-col gap-2">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {results.map((member) => (
             <li key={member.uid} className="border rounded-lg p-3">
               <p className="font-medium">{member.displayName ?? member.email}</p>

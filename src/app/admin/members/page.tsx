@@ -34,12 +34,12 @@ export default async function AdminMembersPage() {
   const [pendingMembers, activeMembers] = await Promise.all([getPendingMembers(), getActiveMembers()])
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold mb-6">Pending Members</h1>
       {pendingMembers.length === 0 ? (
         <p className="opacity-60">No pending applications.</p>
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="grid sm:grid-cols-2 gap-3">
           {pendingMembers.map((member) => (
             <li
               key={member.uid}
@@ -49,7 +49,7 @@ export default async function AdminMembersPage() {
                 <p className="font-medium">{member.displayName ?? member.email}</p>
                 <p className="text-sm opacity-60">{member.email}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <form
                   action={async () => {
                     "use server"
@@ -78,7 +78,7 @@ export default async function AdminMembersPage() {
       {activeMembers.length === 0 ? (
         <p className="opacity-60">No active members yet.</p>
       ) : (
-        <ul className="flex flex-col gap-2">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {activeMembers.map((member) => (
             <li key={member.uid}>
               <Link
