@@ -131,6 +131,25 @@ export function ApplicationForm() {
               <p className="text-sm text-red-600">{state.errors.contactNumber}</p>
             )}
           </div>
+
+          <label className="flex items-start gap-2 text-sm mt-2">
+            <input type="checkbox" name="consentGiven" className="mt-1" />
+            <span>
+              I consent to GDGoC collecting and storing this information for membership
+              processing.
+            </span>
+          </label>
+          {state?.errors?.consentGiven && (
+            <p className="text-sm text-red-600">{state.errors.consentGiven}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={pending}
+            className="rounded-full bg-gdg-blue text-white px-6 py-3 font-medium disabled:opacity-50 self-start"
+          >
+            {pending ? "Submitting…" : "Submit application"}
+          </button>
         </div>
 
         <fieldset>
@@ -192,26 +211,6 @@ export function ApplicationForm() {
           </div>
           {state?.errors?.interests && <p className="text-sm text-red-600">{state.errors.interests}</p>}
         </fieldset>
-      </div>
-
-      <div className="flex flex-col gap-4 max-w-md">
-        <label className="flex items-start gap-2 text-sm">
-          <input type="checkbox" name="consentGiven" className="mt-1" />
-          <span>
-            I consent to GDGoC collecting and storing this information for membership processing.
-          </span>
-        </label>
-        {state?.errors?.consentGiven && (
-          <p className="text-sm text-red-600">{state.errors.consentGiven}</p>
-        )}
-
-        <button
-          type="submit"
-          disabled={pending}
-          className="rounded-full bg-gdg-blue text-white px-6 py-3 font-medium disabled:opacity-50 self-start"
-        >
-          {pending ? "Submitting…" : "Submit application"}
-        </button>
       </div>
     </form>
   )
