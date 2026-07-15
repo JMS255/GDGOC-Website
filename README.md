@@ -91,9 +91,11 @@ Open [http://localhost:3000](http://localhost:3000).
   public events page, manual check-in toggle (`/admin/events/[id]/checkin`)
 - Payment proof: member uploads a GCash screenshot to upgrade to paid tier
   (`/membership`), admin approves/rejects (`/admin/payments`)
+- Renewal per term: admin creates/activates a term (`/admin/terms`); members
+  see a renewal prompt on `/membership` — one-click for free tier, payment
+  proof for paid tier, tracked in `membershipRenewals`
 
 ## What's not built yet (see the original plan for the full roadmap)
-- Renewal flow per term
 - Responsibilities/performance-review accountability system
 - Department position ladder (Member → Staff → Secretary → Subhead → Head)
 - Analytics dashboard

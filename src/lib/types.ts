@@ -20,6 +20,10 @@ export function isDeptHeadOrAbove(role: Role): boolean {
   return DEPT_HEAD_OR_ABOVE.includes(role)
 }
 
+// Term creation/activation is org-wide policy, not a per-department action —
+// scoped to chief_exec/system_admin only, same boundary as orgKpis.
+export const TERM_MANAGERS: Role[] = ["chief_exec", "system_admin"]
+
 export type EventStatus = "draft" | "published" | "completed" | "cancelled"
 
 export interface EventRecord {
@@ -50,4 +54,22 @@ export interface PaymentProofRecord {
   amount: number | null
   status: PaymentProofStatus
   submittedAt: Date
+}
+
+export interface MembershipTermRecord {
+  id: string
+  label: string
+  startDate: Date
+  endDate: Date
+  isActive: boolean
+}
+
+export type RenewalStatus = "pending" | "approved" | "rejected"
+
+export interface MembershipRenewalRecord {
+  id: string
+  uid: string
+  termId: string
+  tier: MembershipTier
+  status: RenewalStatus
 }

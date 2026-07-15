@@ -54,7 +54,7 @@ service cloud.firestore {
 
     match /membershipTerms/{termId} {
       allow read: if isSignedIn();
-      allow write: if isChiefExec();
+      allow write: if isChiefExec() || isSystemAdmin();
     }
 
     match /membershipRenewals/{id} {

@@ -6,7 +6,11 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { auth, storage } from "@/lib/firebase/client"
 import { submitPaymentProof } from "./actions"
 
-export function PaymentProofForm() {
+interface PaymentProofFormProps {
+  termId?: string | null
+}
+
+export function PaymentProofForm({ termId = null }: PaymentProofFormProps) {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -33,7 +37,7 @@ export function PaymentProofForm() {
       const imageURL = await getDownloadURL(storageRef)
 
       const amount = amountInput.value ? Number(amountInput.value) : null
-      await submitPaymentProof(imageURL, amount)
+      await submitPaymentProof(imageURL, amount, termId)
 
       router.refresh()
     } catch {
