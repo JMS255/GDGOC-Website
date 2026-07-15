@@ -87,10 +87,11 @@ Open [http://localhost:3000](http://localhost:3000).
 - Membership: signup → pending → admin approval flow (`/admin/members`)
 - RBAC: `chief_exec`, `system_admin`, `department_head`, `committee`, `member`
   roles, enforced in Firestore rules + `src/lib/dal.ts`
+- Events: admin create/publish/cancel (`/admin/events`), member RSVP on the
+  public events page, manual check-in toggle (`/admin/events/[id]/checkin`)
 
 ## What's not built yet (see the original plan for the full roadmap)
 
-- Event RSVP + manual check-in
 - Payment-proof upload/review for the paid tier
 - Renewal flow per term
 - Responsibilities/performance-review accountability system

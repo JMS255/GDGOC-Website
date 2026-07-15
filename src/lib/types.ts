@@ -19,3 +19,23 @@ export const DEPT_HEAD_OR_ABOVE: Role[] = ["chief_exec", "system_admin", "depart
 export function isDeptHeadOrAbove(role: Role): boolean {
   return DEPT_HEAD_OR_ABOVE.includes(role)
 }
+
+export type EventStatus = "draft" | "published" | "completed" | "cancelled"
+
+export interface EventRecord {
+  id: string
+  title: string
+  description: string
+  department: string
+  startsAt: Date
+  endsAt: Date
+  location: string
+  status: EventStatus
+}
+
+export interface RsvpRecord {
+  id: string
+  eventId: string
+  uid: string
+  attended: boolean
+}
