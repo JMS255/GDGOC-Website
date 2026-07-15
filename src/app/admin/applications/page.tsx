@@ -23,6 +23,7 @@ async function getNewApplications(department: string | null): Promise<Applicatio
       yearLevel: data.yearLevel,
       contactNumber: data.contactNumber,
       interests: data.interests,
+      skills: data.skills ?? [],
       status: data.status,
       interviewNotes: data.interviewNotes,
       rating: data.rating,
@@ -59,6 +60,9 @@ export default async function AdminApplicationsPage() {
                   {app.course} · Year {app.yearLevel}
                 </p>
                 <p className="text-xs opacity-60 mt-1">{app.interests.join(", ")}</p>
+                {app.skills.length > 0 && (
+                  <p className="text-xs opacity-60">Skills: {app.skills.join(", ")}</p>
+                )}
               </Link>
             </li>
           ))}

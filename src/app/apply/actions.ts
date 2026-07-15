@@ -23,6 +23,7 @@ export async function submitApplication(
     yearLevel: formData.get("yearLevel"),
     contactNumber: formData.get("contactNumber"),
     interests: formData.getAll("interests"),
+    skills: formData.getAll("skills"),
     consentGiven: formData.get("consentGiven"),
   })
 
@@ -30,7 +31,7 @@ export async function submitApplication(
     return { errors: validated.error.flatten().fieldErrors }
   }
 
-  const { fullName, email, studentId, course, yearLevel, contactNumber, interests } = validated.data
+  const { fullName, email, studentId, course, yearLevel, contactNumber, interests, skills } = validated.data
 
   await adminDb.collection("applications").add({
     fullName,
@@ -40,6 +41,7 @@ export async function submitApplication(
     yearLevel,
     contactNumber,
     interests,
+    skills,
     status: "new",
     interviewNotes: "",
     rating: null,

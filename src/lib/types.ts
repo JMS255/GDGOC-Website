@@ -149,6 +149,7 @@ export interface ApplicationRecord {
   yearLevel: number
   contactNumber: string
   interests: string[]
+  skills: string[]
   status: ApplicationStatus
   interviewNotes: string
   rating: number | null

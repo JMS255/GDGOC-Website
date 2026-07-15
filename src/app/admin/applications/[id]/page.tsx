@@ -24,7 +24,10 @@ export default async function ApplicationDetailPage({
         {app.course} · Year {app.yearLevel} · {app.studentId}
       </p>
       <p className="text-sm opacity-70 mb-1">Contact: {app.contactNumber}</p>
-      <p className="text-sm opacity-70 mb-6">Interested in: {app.interests.join(", ")}</p>
+      <p className="text-sm opacity-70 mb-1">Interested in: {app.interests.join(", ")}</p>
+      <p className="text-sm opacity-70 mb-6">
+        {app.skills?.length > 0 ? `Skills: ${app.skills.join(", ")}` : "No specific skills selected."}
+      </p>
 
       <p className="text-sm font-medium capitalize mb-6">Status: {app.status}</p>
 

@@ -90,6 +90,7 @@ export async function POST(request: Request) {
       yearLevel: application.yearLevel,
       contactNumber: application.contactNumber,
       interests: application.interests,
+      skills: application.skills ?? [],
       hearAboutUs: "",
       consentGiven: true,
       consentTimestamp: FieldValue.serverTimestamp(),

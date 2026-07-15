@@ -1,4 +1,5 @@
 import * as z from "zod"
+import { ALL_SKILLS } from "./department-info"
 
 const ALLOWED_EMAIL_DOMAIN = process.env.NEXT_PUBLIC_ALLOWED_EMAIL_DOMAIN ?? ""
 
@@ -17,6 +18,7 @@ export const ApplicationSchema = z.object({
   yearLevel: z.coerce.number().int().min(1).max(5, { error: "Enter a year level 1-5." }),
   contactNumber: z.string().trim().min(7, { error: "Enter a valid contact number." }),
   interests: z.array(z.string()).min(1, { error: "Select at least one interest." }),
+  skills: z.array(z.enum(ALL_SKILLS)),
   consentGiven: z.literal("on", {
     error: "You must consent to data collection to continue.",
   }),
