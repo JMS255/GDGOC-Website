@@ -83,3 +83,25 @@ export interface MembershipRenewalRecord {
   tier: MembershipTier
   status: RenewalStatus
 }
+
+export type ResponsibilityStatus = "assigned" | "done" | "missed"
+
+export interface ResponsibilityRecord {
+  id: string
+  assignedTo: string
+  assignedBy: string
+  title: string
+  dueDate: Date | null
+  status: ResponsibilityStatus
+  createdAt: Date
+}
+
+export interface PerformanceReviewRecord {
+  id: string
+  uid: string
+  termId: string
+  reviewedBy: string
+  rating: number
+  note: string
+  createdAt: Date
+}

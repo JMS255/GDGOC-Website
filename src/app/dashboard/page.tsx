@@ -15,6 +15,17 @@ interface OrgKpi {
   value: string
 }
 
+interface OwnResponsibility {
+  id: string
+  title: string
+  dueDate: string | null
+}
+
+interface LatestReview {
+  rating: number
+  note: string
+}
+
 async function getAnnouncements(): Promise<Announcement[]> {
   const snapshot = await adminDb
     .collection("announcements")
@@ -29,12 +40,42 @@ async function getOrgKpis(): Promise<OrgKpi[]> {
   return snapshot.docs.map((doc) => ({ id: doc.id, label: doc.data().label, value: doc.data().value }))
 }
 
+async function getOwnOpenResponsibilities(uid: string): Promise<OwnResponsibility[]> {
+  const snapshot = await adminDb
+    .collection("responsibilities")
+    .where("assignedTo", "==", uid)
+    .where("status", "==", "assigned")
+    .get()
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    title: doc.data().title,
+    dueDate: doc.data().dueDate ? doc.data().dueDate.toDate().toLocaleDateString() : null,
+  }))
+}
+
+async function getLatestReview(uid: string): Promise<LatestReview | null> {
+  const snapshot = await adminDb
+    .collection("performanceReviews")
+    .where("uid", "==", uid)
+    .orderBy("createdAt", "desc")
+    .limit(1)
+    .get()
+  if (snapshot.empty) return null
+  const data = snapshot.docs[0].data()
+  return { rating: data.rating, note: data.note }
+}
+
 export default async function DashboardPage() {
   // This page requires an authenticated, active member — the check lives
   // here (not in a shared layout) per Next.js's DAL recommendation, since
   // layouts don't re-run on client-side navigation.
   const user = await requireActiveMember()
-  const [announcements, orgKpis] = await Promise.all([getAnnouncements(), getOrgKpis()])
+  const [announcements, orgKpis, openResponsibilities, latestReview] = await Promise.all([
+    getAnnouncements(),
+    getOrgKpis(),
+    getOwnOpenResponsibilities(user.uid),
+    getLatestReview(user.uid),
+  ])
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
@@ -61,6 +102,33 @@ export default async function DashboardPage() {
               <p className="text-xl font-semibold">{kpi.value}</p>
             </div>
           ))}
+        </section>
+      )}
+
+      {(openResponsibilities.length > 0 || latestReview) && (
+        <section className="mb-8">
+          {openResponsibilities.length > 0 && (
+            <div className="mb-4">
+              <h2 className="font-semibold mb-3">Your Responsibilities</h2>
+              <ul className="flex flex-col gap-2">
+                {openResponsibilities.map((r) => (
+                  <li key={r.id} className="border rounded-lg p-3">
+                    <p className="font-medium">{r.title}</p>
+                    {r.dueDate && <p className="text-xs opacity-60">Due {r.dueDate}</p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {latestReview && (
+            <div>
+              <h2 className="font-semibold mb-3">Latest Review</h2>
+              <div className="border rounded-lg p-3">
+                <p className="font-medium">Rating: {latestReview.rating}/5</p>
+                {latestReview.note && <p className="text-sm opacity-80">{latestReview.note}</p>}
+              </div>
+            </div>
+          )}
         </section>
       )}
 

@@ -97,8 +97,13 @@ Open [http://localhost:3000](http://localhost:3000).
 - Membership lookup (`/lookup`): read-only name/email search for Committee
   and above — for verifying membership (e.g. at an event door) without full
   admin dashboard access
+- Responsibilities + performance reviews (`/admin/members/[uid]`): dept heads
+  assign a small number of specific responsibilities per member (done/missed,
+  not exhaustive tracking) and submit one rating+note review per member per
+  term; members see their own open responsibilities and latest review on
+  `/dashboard`. Deliberately no rank/position ladder on top of this (deferred
+  per the org's decision to keep structure simple — the review/responsibility
+  data doesn't preclude adding recognition features later if that changes)
 
 ## What's not built yet (see the original plan for the full roadmap)
-- Responsibilities/performance-review accountability system
-- Department position ladder (Member → Staff → Secretary → Subhead → Head)
 - Analytics dashboard
