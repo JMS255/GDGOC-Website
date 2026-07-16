@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Timestamp } from "firebase-admin/firestore"
 import { adminDb } from "@/lib/firebase/admin"
 import { getOptionalUser } from "@/lib/dal"
 import { rsvpToEvent } from "./actions"
@@ -15,6 +16,7 @@ async function getPublishedEvents(): Promise<EventListItem[]> {
   const snapshot = await adminDb
     .collection("events")
     .where("status", "==", "published")
+    .where("startsAt", ">=", Timestamp.now())
     .orderBy("startsAt", "asc")
     .get()
 

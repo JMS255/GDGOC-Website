@@ -8,6 +8,12 @@ import { requireActiveMember } from "@/lib/dal"
 export async function rsvpToEvent(eventId: string): Promise<void> {
   const user = await requireActiveMember()
 
+  const eventDoc = await adminDb.collection("events").doc(eventId).get()
+  const event = eventDoc.data()
+  if (!event || event.status !== "published" || event.startsAt.toDate() < new Date()) {
+    return // stale page (event was cancelled, or has since started) — no-op
+  }
+
   const existing = await adminDb
     .collection("rsvps")
     .where("eventId", "==", eventId)
