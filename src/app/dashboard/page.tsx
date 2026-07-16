@@ -1,21 +1,8 @@
 import Link from "next/link"
 import { requireActiveMember } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
-import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE, TERM_MANAGERS } from "@/lib/types"
+import { COMMITTEE_OR_ABOVE } from "@/lib/types"
 import { LogoutButton } from "@/components/logout-button"
-
-const DEPT_HEAD_LINKS = [
-  { href: "/admin/applications", label: "Applications" },
-  { href: "/admin/members", label: "Members" },
-  { href: "/admin/events", label: "Events" },
-  { href: "/admin/payments", label: "Payments" },
-  { href: "/admin/terms", label: "Terms" },
-  { href: "/admin/merch", label: "Merch" },
-  { href: "/admin/analytics", label: "Analytics" },
-  { href: "/admin/announcements", label: "Announcements" },
-]
-
-const TERM_MANAGER_LINKS = [{ href: "/admin/kpis", label: "KPIs" }]
 
 const KPI_COLORS = ["var(--gdg-blue)", "var(--gdg-green)", "var(--gdg-yellow)", "var(--gdg-red)"]
 
@@ -110,34 +97,17 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {(isDeptHeadOrAbove(user.role) || COMMITTEE_OR_ABOVE.includes(user.role)) && (
-        <section className="mb-8 flex flex-wrap gap-2">
-          {isDeptHeadOrAbove(user.role) &&
-            DEPT_HEAD_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm rounded-full border px-4 py-1.5"
-              >
-                {link.label}
-              </Link>
-            ))}
-          {TERM_MANAGERS.includes(user.role) &&
-            TERM_MANAGER_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm rounded-full border px-4 py-1.5"
-              >
-                {link.label}
-              </Link>
-            ))}
-          {COMMITTEE_OR_ABOVE.includes(user.role) && (
-            <Link href="/lookup" className="text-sm rounded-full border px-4 py-1.5">
-              Lookup
-            </Link>
-          )}
-        </section>
+      {COMMITTEE_OR_ABOVE.includes(user.role) && (
+        <Link
+          href="/admin"
+          className="mb-8 block border-t-4 rounded-lg border p-4 max-w-sm hover:bg-black/5"
+          style={{ borderTopColor: "var(--gdg-blue)" }}
+        >
+          <p className="font-medium">Admin Dashboard →</p>
+          <p className="text-sm opacity-70">
+            Manage applications, members, events, and more.
+          </p>
+        </Link>
       )}
 
       {orgKpis.length > 0 && (

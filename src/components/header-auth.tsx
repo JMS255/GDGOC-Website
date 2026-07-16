@@ -60,7 +60,11 @@ export function HeaderAuth() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 rounded-lg border bg-background shadow-lg py-2 z-20">
+        <div className="absolute right-0 top-full mt-3 w-64 rounded-lg border bg-background shadow-lg py-2 z-20">
+          <div
+            aria-hidden
+            className="absolute -top-1.5 right-2 w-3 h-3 bg-background border-t border-l rotate-45"
+          />
           <div className="px-4 py-2 border-b">
             <p className="text-sm font-medium truncate">{user.displayName ?? "Member"}</p>
             <p className="text-xs opacity-60 truncate">{user.email}</p>
