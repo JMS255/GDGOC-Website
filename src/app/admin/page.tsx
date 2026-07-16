@@ -1,12 +1,14 @@
 import Link from "next/link"
 import { requireRole } from "@/lib/dal"
-import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE, TERM_MANAGERS } from "@/lib/types"
+import { adminDb } from "@/lib/firebase/admin"
+import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE, TERM_MANAGERS, type Role } from "@/lib/types"
 
 interface AdminLink {
   href: string
   title: string
   description: string
   color: string
+  badgeKey?: keyof Stats
 }
 
 const SECTIONS: { heading: string; links: AdminLink[] }[] = [
@@ -18,6 +20,7 @@ const SECTIONS: { heading: string; links: AdminLink[] }[] = [
         title: "Applications",
         description: "Review new applicants routed to your department, add interview notes, approve or reject.",
         color: "var(--gdg-blue)",
+        badgeKey: "pendingApplications",
       },
       {
         href: "/admin/members",
@@ -41,12 +44,14 @@ const SECTIONS: { heading: string; links: AdminLink[] }[] = [
         title: "Payments",
         description: "Review GCash payment-proof screenshots for paid-tier upgrades and renewals.",
         color: "var(--gdg-red)",
+        badgeKey: "pendingPayments",
       },
       {
         href: "/admin/merch",
         title: "Merch",
         description: "Manage products and review guest checkout orders.",
         color: "var(--gdg-blue-halftone)",
+        badgeKey: "pendingOrders",
       },
     ],
   },
@@ -82,10 +87,64 @@ const TERM_MANAGER_LINK: AdminLink = {
   color: "var(--gdg-blue)",
 }
 
+interface Stats {
+  pendingApplications: number
+  pendingPayments: number
+  pendingOrders: number
+  activeMembers: number
+  upcomingEvents: number
+}
+
+async function getStats(admin: { role: Role; department: string | null }): Promise<Stats> {
+  const isDeptHeadOnly = admin.role === "department_head"
+
+  let applicationsQuery = adminDb.collection("applications").where("status", "==", "new")
+  if (isDeptHeadOnly) {
+    applicationsQuery = applicationsQuery.where("interests", "array-contains", admin.department ?? "")
+  }
+
+  const [applicationsCount, paymentsCount, ordersCount, membersCount, eventsSnapshot] = await Promise.all([
+    applicationsQuery.count().get(),
+    adminDb.collection("paymentProofs").where("status", "==", "pending").count().get(),
+    adminDb.collection("merchOrders").where("status", "==", "pending").count().get(),
+    adminDb.collection("users").where("membershipStatus", "==", "active").count().get(),
+    adminDb.collection("events").where("status", "==", "published").get(),
+  ])
+
+  const now = Date.now()
+  const upcomingEvents = eventsSnapshot.docs.filter((doc) => doc.data().startsAt.toDate().getTime() >= now).length
+
+  return {
+    pendingApplications: applicationsCount.data().count,
+    pendingPayments: paymentsCount.data().count,
+    pendingOrders: ordersCount.data().count,
+    activeMembers: membersCount.data().count,
+    upcomingEvents,
+  }
+}
+
+const STAT_TILES: { key: keyof Stats; label: string; color: string }[] = [
+  { key: "pendingApplications", label: "Applications to review", color: "var(--gdg-blue)" },
+  { key: "pendingPayments", label: "Payments to review", color: "var(--gdg-red)" },
+  { key: "pendingOrders", label: "Merch orders to review", color: "var(--gdg-blue-halftone)" },
+  { key: "activeMembers", label: "Active members", color: "var(--gdg-green)" },
+  { key: "upcomingEvents", label: "Upcoming events", color: "var(--gdg-yellow)" },
+]
+
+function Badge({ count }: { count: number }) {
+  if (count === 0) return null
+  return (
+    <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full bg-gdg-red text-white text-xs font-semibold">
+      {count}
+    </span>
+  )
+}
+
 export default async function AdminDashboardPage() {
   const admin = await requireRole(COMMITTEE_OR_ABOVE)
   const showDeptHeadSections = isDeptHeadOrAbove(admin.role)
   const showTermManagerLink = TERM_MANAGERS.includes(admin.role)
+  const stats = showDeptHeadSections ? await getStats(admin) : null
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
@@ -97,6 +156,23 @@ export default async function AdminDashboardPage() {
 
       {showDeptHeadSections ? (
         <div className="flex flex-col gap-10">
+          {stats && (
+            <section>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                {STAT_TILES.map((tile) => (
+                  <div
+                    key={tile.key}
+                    className="border-t-4 rounded-lg p-4 border"
+                    style={{ borderTopColor: tile.color }}
+                  >
+                    <p className="text-xs opacity-60">{tile.label}</p>
+                    <p className="text-xl font-semibold">{stats[tile.key]}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {SECTIONS.map((section) => (
             <section key={section.heading}>
               <h2 className="font-semibold mb-3">{section.heading}</h2>
@@ -108,7 +184,10 @@ export default async function AdminDashboardPage() {
                     className="border-t-4 rounded-lg border p-4 hover:bg-black/5"
                     style={{ borderTopColor: link.color }}
                   >
-                    <p className="font-medium mb-1">{link.title}</p>
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <p className="font-medium">{link.title}</p>
+                      {stats && link.badgeKey && <Badge count={stats[link.badgeKey]} />}
+                    </div>
                     <p className="text-sm opacity-70">{link.description}</p>
                   </Link>
                 ))}
