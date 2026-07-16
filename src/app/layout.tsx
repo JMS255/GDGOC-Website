@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import { GdgDots } from "@/components/gdg-dots";
+import { HeaderAuth } from "@/components/header-auth";
 import "./globals.css";
 
 // GDG's brand guidelines specify "Google Sans" / "Google Sans Mono" as the
@@ -57,9 +58,7 @@ export default function RootLayout({
               <Link href="/apply" className="rounded-full bg-gdg-blue text-white px-4 py-1.5 font-medium">
                 Apply
               </Link>
-              <Link href="/login" className="hover:text-gdg-red transition-colors">
-                Login
-              </Link>
+              <HeaderAuth />
             </div>
           </nav>
         </header>
