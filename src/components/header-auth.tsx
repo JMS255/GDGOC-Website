@@ -48,7 +48,7 @@ export function HeaderAuth() {
     <div className="relative" ref={panelRef}>
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="w-8 h-8 rounded-full overflow-hidden border border-black/10 flex items-center justify-center bg-gdg-blue text-white text-sm font-medium"
+        className="btn-press w-8 h-8 rounded-full overflow-hidden border border-black/10 flex items-center justify-center bg-gdg-blue text-white text-sm font-medium"
         aria-label="Account menu"
       >
         {user.photoURL ? (

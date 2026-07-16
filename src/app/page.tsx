@@ -26,46 +26,48 @@ export default function Home() {
     <div className="relative overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full blur-3xl opacity-30"
+        className="animate-float pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full blur-3xl opacity-30"
         style={{ backgroundColor: "var(--gdg-blue)" }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute top-10 -right-20 w-80 h-80 rounded-full blur-3xl opacity-30"
-        style={{ backgroundColor: "var(--gdg-yellow)" }}
+        className="animate-float pointer-events-none absolute top-10 -right-20 w-80 h-80 rounded-full blur-3xl opacity-30"
+        style={{ backgroundColor: "var(--gdg-yellow)", animationDelay: "1.5s" }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-0 left-1/3 w-64 h-64 rounded-full blur-3xl opacity-20"
-        style={{ backgroundColor: "var(--gdg-green)" }}
+        className="animate-float pointer-events-none absolute bottom-0 left-1/3 w-64 h-64 rounded-full blur-3xl opacity-20"
+        style={{ backgroundColor: "var(--gdg-green)", animationDelay: "3s" }}
       />
 
       <div className="relative max-w-3xl mx-auto px-6 py-28 text-center flex flex-col items-center gap-6">
-        <GdgDots />
+        <div className="animate-fade-in-up">
+          <GdgDots />
+        </div>
         <span
-          className="font-mono text-sm px-3 py-1 rounded-full border"
-          style={{ borderColor: "var(--gdg-blue)", color: "var(--gdg-blue)" }}
+          className="animate-fade-in-up font-mono text-sm px-3 py-1 rounded-full border"
+          style={{ borderColor: "var(--gdg-blue)", color: "var(--gdg-blue)", animationDelay: "0.1s" }}
         >
           &lt;GDGoC AdZU /&gt;
         </span>
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">
+        <h1 className="animate-fade-in-up text-4xl sm:text-6xl font-bold tracking-tight" style={{ animationDelay: "0.2s" }}>
           Connect with student <span style={{ color: "var(--gdg-blue)" }}>developers</span> at{" "}
           <span style={{ color: "var(--gdg-red)" }}>Adzu</span>
         </h1>
-        <p className="max-w-xl text-lg opacity-70">
+        <p className="animate-fade-in-up max-w-xl text-lg opacity-70" style={{ animationDelay: "0.3s" }}>
           GDGoC brings together students who want to build, learn, and grow with Google
           technologies — through events, workshops, and hands-on projects.
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
+        <div className="animate-fade-in-up flex flex-wrap items-center justify-center gap-4 mt-2" style={{ animationDelay: "0.4s" }}>
           <Link
             href="/apply"
-            className="rounded-full bg-gdg-blue text-white px-8 py-3.5 font-medium"
+            className="btn-press rounded-full bg-gdg-blue text-white px-8 py-3.5 font-medium"
           >
             Apply Now
           </Link>
           <Link
             href="/events"
-            className="rounded-full border-2 px-8 py-3.5 font-medium"
+            className="btn-press rounded-full border-2 px-8 py-3.5 font-medium"
             style={{ borderColor: "var(--gdg-blue)" }}
           >
             See upcoming events
@@ -75,7 +77,11 @@ export default function Home() {
 
       <div className="relative max-w-4xl mx-auto px-6 pb-16 grid sm:grid-cols-3 gap-6">
         {FEATURES.map((f) => (
-          <div key={f.title} className="border-t-4 rounded-lg p-5 border" style={{ borderTopColor: f.color }}>
+          <div
+            key={f.title}
+            className="hover-lift border-t-4 rounded-lg p-5 border"
+            style={{ borderTopColor: f.color }}
+          >
             <h2 className="font-semibold mb-1">{f.title}</h2>
             <p className="text-sm opacity-70">{f.description}</p>
           </div>
@@ -93,7 +99,7 @@ export default function Home() {
             const info = DEPARTMENT_INFO[dept]
             const color = DEPARTMENT_COLOR[dept]
             return (
-              <div key={dept} className="border rounded-lg p-4">
+              <div key={dept} className="hover-lift border rounded-lg p-4">
                 <span
                   className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-2 py-0.5 mb-2 text-black"
                   style={{ backgroundColor: color }}
@@ -107,7 +113,7 @@ export default function Home() {
           })}
         </div>
         <div className="text-center mt-8">
-          <Link href="/apply" className="rounded-full bg-gdg-blue text-white px-8 py-3.5 font-medium">
+          <Link href="/apply" className="btn-press rounded-full bg-gdg-blue text-white px-8 py-3.5 font-medium">
             Apply Now
           </Link>
         </div>

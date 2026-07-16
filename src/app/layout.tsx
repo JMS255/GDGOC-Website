@@ -55,7 +55,7 @@ export default function RootLayout({
               <Link href="/about" className="hover:text-gdg-yellow transition-colors">
                 About
               </Link>
-              <Link href="/apply" className="rounded-full bg-gdg-blue text-white px-4 py-1.5 font-medium">
+              <Link href="/apply" className="btn-press rounded-full bg-gdg-blue text-white px-4 py-1.5 font-medium">
                 Apply
               </Link>
               <HeaderAuth />
