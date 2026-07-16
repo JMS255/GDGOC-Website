@@ -5,9 +5,11 @@ import { DEPT_HEAD_OR_ABOVE, type ApplicationRecord } from "@/lib/types"
 
 async function getNewApplications(department: string | null): Promise<ApplicationRecord[]> {
   let query = adminDb.collection("applications").where("status", "==", "new")
-  // Chief Exec / System Admin (no department) see everyone; a Department
-  // Head only sees applicants who expressed interest in their own department.
-  if (department) {
+  // Chief Exec / System Admin pass department === null and see everyone.
+  // A Department Head ALWAYS gets filtered, even if their department isn't
+  // set yet (empty string) — that must produce zero results, not "show all",
+  // so this checks !== null rather than truthiness of the department string.
+  if (department !== null) {
     query = query.where("interests", "array-contains", department)
   }
   const snapshot = await query.get()
@@ -36,7 +38,7 @@ async function getNewApplications(department: string | null): Promise<Applicatio
 export default async function AdminApplicationsPage() {
   const admin = await requireRole(DEPT_HEAD_OR_ABOVE)
   const isDeptHeadOnly = admin.role === "department_head"
-  const applications = await getNewApplications(isDeptHeadOnly ? admin.department : null)
+  const applications = await getNewApplications(isDeptHeadOnly ? admin.department ?? "" : null)
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">

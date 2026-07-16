@@ -101,7 +101,9 @@ function MagnitudeBar({ rows, barColor = "#4285F4" }: { rows: CountRow[]; barCol
     <ul className="flex flex-col gap-2">
       {rows.map((row) => (
         <li key={row.label} className="flex items-center gap-3 text-sm">
-          <span className="w-28 shrink-0 truncate">{row.label}</span>
+          <span className="w-40 shrink-0 truncate" title={row.label}>
+            {row.label}
+          </span>
           <div className="flex-1 h-4 rounded bg-black/5 overflow-hidden">
             <div
               className="h-full rounded"
