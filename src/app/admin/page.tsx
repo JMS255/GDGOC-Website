@@ -2,6 +2,7 @@ import Link from "next/link"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE, TERM_MANAGERS, type Role } from "@/lib/types"
+import { LoadingIndicator } from "@/components/loading-indicator"
 
 interface AdminLink {
   href: string
@@ -181,11 +182,13 @@ export default async function AdminDashboardPage() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="border-t-4 rounded-lg border p-4 hover:bg-black/5"
+                    className="hover-lift border-t-4 rounded-lg border p-4"
                     style={{ borderTopColor: link.color }}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <p className="font-medium">{link.title}</p>
+                      <p className="font-medium">
+                        {link.title} <LoadingIndicator />
+                      </p>
                       {stats && link.badgeKey && <Badge count={stats[link.badgeKey]} />}
                     </div>
                     <p className="text-sm opacity-70">{link.description}</p>
@@ -200,10 +203,12 @@ export default async function AdminDashboardPage() {
               <h2 className="font-semibold mb-3">Chief Exec / System Admin</h2>
               <Link
                 href={TERM_MANAGER_LINK.href}
-                className="block border-t-4 rounded-lg border p-4 hover:bg-black/5 max-w-sm"
+                className="hover-lift block border-t-4 rounded-lg border p-4 max-w-sm"
                 style={{ borderTopColor: TERM_MANAGER_LINK.color }}
               >
-                <p className="font-medium mb-1">{TERM_MANAGER_LINK.title}</p>
+                <p className="font-medium mb-1">
+                  {TERM_MANAGER_LINK.title} <LoadingIndicator />
+                </p>
                 <p className="text-sm opacity-70">{TERM_MANAGER_LINK.description}</p>
               </Link>
             </section>
@@ -214,10 +219,12 @@ export default async function AdminDashboardPage() {
           <h2 className="font-semibold mb-3">Membership Lookup</h2>
           <Link
             href="/lookup"
-            className="block border-t-4 rounded-lg border p-4 hover:bg-black/5 max-w-sm"
+            className="hover-lift block border-t-4 rounded-lg border p-4 max-w-sm"
             style={{ borderTopColor: "var(--gdg-blue)" }}
           >
-            <p className="font-medium mb-1">Lookup</p>
+            <p className="font-medium mb-1">
+              Lookup <LoadingIndicator />
+            </p>
             <p className="text-sm opacity-70">
               Search members by name or email to verify membership — e.g. at an event door.
             </p>

@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE } from "@/lib/types"
 import { saveInterviewNotes, approveApplication, rejectApplication } from "./actions"
+import { BackLink } from "@/components/back-link"
 
 export default async function ApplicationDetailPage({
   params,
@@ -18,6 +19,7 @@ export default async function ApplicationDetailPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
+      <BackLink href="/admin/applications" label="Applications" />
       <h1 className="text-2xl font-bold">{app.fullName}</h1>
       <p className="text-sm opacity-70 mb-1">{app.email}</p>
       <p className="text-sm opacity-70 mb-1">

@@ -10,6 +10,7 @@ import {
 } from "@/lib/types"
 import { assignResponsibility, setResponsibilityStatus, submitPerformanceReview, assignRole } from "./actions"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 
 async function getResponsibilities(uid: string): Promise<ResponsibilityRecord[]> {
   const snapshot = await adminDb
@@ -85,6 +86,7 @@ export default async function AdminMemberDetailPage({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <BackLink href="/admin/members" label="Members" />
       <h1 className="text-2xl font-bold">{user.displayName ?? user.email}</h1>
       <p className="text-sm opacity-70 mb-8 capitalize">
         {user.email} · {user.role.replace("_", " ")}

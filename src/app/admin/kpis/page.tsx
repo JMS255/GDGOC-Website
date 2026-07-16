@@ -2,6 +2,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { TERM_MANAGERS, type OrgKpiRecord } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 import { createKpi, updateKpi, deleteKpi } from "./actions"
 
 async function getKpis(): Promise<OrgKpiRecord[]> {
@@ -15,6 +16,7 @@ export default async function AdminKpisPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <h1 className="text-2xl font-bold mb-6">Org KPIs</h1>
       <p className="text-sm opacity-70 mb-6">
         Shown as the stat tiles at the top of every member&apos;s dashboard.

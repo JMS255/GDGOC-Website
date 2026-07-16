@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type EventRecord } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 import { EventForm } from "./event-form"
 import { publishEvent, cancelEvent } from "./actions"
 
@@ -29,6 +30,7 @@ export default async function AdminEventsPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <h1 className="text-2xl font-bold mb-6">Events</h1>
       <div className="grid lg:grid-cols-[320px_1fr] gap-10">
         <EventForm />

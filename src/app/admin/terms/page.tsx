@@ -2,6 +2,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { TERM_MANAGERS, type MembershipTermRecord } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 import { createTerm, activateTerm } from "./actions"
 
 async function getTerms(): Promise<MembershipTermRecord[]> {
@@ -24,6 +25,7 @@ export default async function AdminTermsPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <h1 className="text-2xl font-bold mb-6">Membership Terms</h1>
 
       <div className="grid lg:grid-cols-[320px_1fr] gap-10">

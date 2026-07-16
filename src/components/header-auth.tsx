@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { onAuthStateChanged, signOut, type User } from "firebase/auth"
 import { auth } from "@/lib/firebase/client"
+import { LoadingIndicator } from "@/components/loading-indicator"
 
 export function HeaderAuth() {
   const router = useRouter()
@@ -74,14 +75,14 @@ export function HeaderAuth() {
             className="block px-4 py-2 text-sm hover:bg-black/5"
             onClick={() => setIsOpen(false)}
           >
-            Dashboard
+            Dashboard <LoadingIndicator />
           </Link>
           <Link
             href="/membership"
             className="block px-4 py-2 text-sm hover:bg-black/5"
             onClick={() => setIsOpen(false)}
           >
-            Membership
+            Membership <LoadingIndicator />
           </Link>
           <button
             onClick={handleLogout}

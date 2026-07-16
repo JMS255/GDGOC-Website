@@ -1,6 +1,7 @@
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE } from "@/lib/types"
+import { BackLink } from "@/components/back-link"
 
 interface CountRow {
   label: string
@@ -128,6 +129,7 @@ export default async function AdminAnalyticsPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <h1 className="text-2xl font-bold mb-1">Analytics</h1>
       <p className="text-sm opacity-70 mb-10">{total} total accounts</p>
 

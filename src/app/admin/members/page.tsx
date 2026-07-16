@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 
 interface MemberSummary {
   uid: string
@@ -26,6 +27,7 @@ export default async function AdminMembersPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Members</h1>
         <Link href="/admin/applications" className="text-sm underline">

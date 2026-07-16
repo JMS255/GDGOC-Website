@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type PaymentProofRecord } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 import { approvePayment, rejectPayment } from "./actions"
 
 async function getPendingProofs(): Promise<PaymentProofRecord[]> {
@@ -32,6 +33,7 @@ export default async function AdminPaymentsPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <h1 className="text-2xl font-bold mb-6">Payment Proofs</h1>
       {proofs.length === 0 ? (
         <EmptyState

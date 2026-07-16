@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 import { toggleCheckIn } from "./actions"
 
 interface CheckinRow {
@@ -47,6 +48,7 @@ export default async function CheckinPage({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <BackLink href="/admin/events" label="Events" />
       <h1 className="text-2xl font-bold mb-1">{eventDoc.data()!.title}</h1>
       <p className="text-sm opacity-60 mb-6">{rows.length} RSVP(s)</p>
 

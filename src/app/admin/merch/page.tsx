@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type ProductRecord, type MerchOrderRecord } from "@/lib/types"
 import { EmptyState } from "@/components/empty-state"
+import { BackLink } from "@/components/back-link"
 import { createProduct, toggleProductActive, setOrderStatus } from "./actions"
 
 async function getProducts(): Promise<ProductRecord[]> {
@@ -52,6 +53,7 @@ export default async function AdminMerchPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+      <BackLink href="/admin" label="Admin Dashboard" />
       <h1 className="text-2xl font-bold mb-6">Merch</h1>
 
       <section className="mb-10">
