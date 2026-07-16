@@ -1,4 +1,10 @@
 export type Role = "chief_exec" | "system_admin" | "department_head" | "committee" | "member"
+export const ALL_ROLES: Role[] = ["chief_exec", "system_admin", "department_head", "committee", "member"]
+
+// Role reassignment is Chief Exec only — the one thing System Admin can't
+// do, per the deliberate boundary set for that role (full operational
+// access otherwise, but final organizational authority stays with Chief Exec).
+export const CHIEF_EXEC_ONLY: Role[] = ["chief_exec"]
 
 export type MembershipStatus = "pending" | "active" | "expired" | "rejected"
 
@@ -162,4 +168,17 @@ export interface ApplicationRecord {
   rating: number | null
   convertedUid: string | null
   createdAt: Date
+}
+
+export interface AnnouncementRecord {
+  id: string
+  title: string
+  body: string
+  createdAt: Date
+}
+
+export interface OrgKpiRecord {
+  id: string
+  label: string
+  value: string
 }

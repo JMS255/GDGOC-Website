@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { requireActiveMember } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
-import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE } from "@/lib/types"
+import { isDeptHeadOrAbove, COMMITTEE_OR_ABOVE, TERM_MANAGERS } from "@/lib/types"
 import { LogoutButton } from "@/components/logout-button"
 
 const DEPT_HEAD_LINKS = [
@@ -12,7 +12,10 @@ const DEPT_HEAD_LINKS = [
   { href: "/admin/terms", label: "Terms" },
   { href: "/admin/merch", label: "Merch" },
   { href: "/admin/analytics", label: "Analytics" },
+  { href: "/admin/announcements", label: "Announcements" },
 ]
+
+const TERM_MANAGER_LINKS = [{ href: "/admin/kpis", label: "KPIs" }]
 
 const KPI_COLORS = ["var(--gdg-blue)", "var(--gdg-green)", "var(--gdg-yellow)", "var(--gdg-red)"]
 
@@ -111,6 +114,16 @@ export default async function DashboardPage() {
         <section className="mb-8 flex flex-wrap gap-2">
           {isDeptHeadOrAbove(user.role) &&
             DEPT_HEAD_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm rounded-full border px-4 py-1.5"
+              >
+                {link.label}
+              </Link>
+            ))}
+          {TERM_MANAGERS.includes(user.role) &&
+            TERM_MANAGER_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

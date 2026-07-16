@@ -1,8 +1,14 @@
 import { notFound } from "next/navigation"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
-import { DEPT_HEAD_OR_ABOVE, type ResponsibilityRecord, type PerformanceReviewRecord } from "@/lib/types"
-import { assignResponsibility, setResponsibilityStatus, submitPerformanceReview } from "./actions"
+import {
+  DEPT_HEAD_OR_ABOVE,
+  ALL_ROLES,
+  DEPARTMENTS,
+  type ResponsibilityRecord,
+  type PerformanceReviewRecord,
+} from "@/lib/types"
+import { assignResponsibility, setResponsibilityStatus, submitPerformanceReview, assignRole } from "./actions"
 
 async function getResponsibilities(uid: string): Promise<ResponsibilityRecord[]> {
   const snapshot = await adminDb
@@ -61,7 +67,7 @@ export default async function AdminMemberDetailPage({
 }: {
   params: Promise<{ uid: string }>
 }) {
-  await requireRole(DEPT_HEAD_OR_ABOVE)
+  const admin = await requireRole(DEPT_HEAD_OR_ABOVE)
   const { uid } = await params
 
   const userDoc = await adminDb.collection("users").doc(uid).get()
@@ -80,8 +86,49 @@ export default async function AdminMemberDetailPage({
     <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold">{user.displayName ?? user.email}</h1>
       <p className="text-sm opacity-70 mb-8 capitalize">
-        {user.email} · {user.role.replace("_", " ")} · {user.membershipStatus} · {user.membershipTier} tier
+        {user.email} · {user.role.replace("_", " ")}
+        {user.department && ` · ${user.department}`} · {user.membershipStatus} · {user.membershipTier} tier
       </p>
+
+      {admin.role === "chief_exec" && (
+        <section className="mb-10 border rounded-lg p-4 max-w-md">
+          <h2 className="font-semibold mb-3">Role &amp; Department</h2>
+          <form
+            action={async (formData: FormData) => {
+              "use server"
+              await assignRole(
+                uid,
+                String(formData.get("role") ?? "member"),
+                (formData.get("department") as string) || null
+              )
+            }}
+            className="flex flex-col gap-2"
+          >
+            <select name="role" defaultValue={user.role} className="border rounded px-3 py-2">
+              {ALL_ROLES.map((r) => (
+                <option key={r} value={r}>
+                  {r.replace("_", " ")}
+                </option>
+              ))}
+            </select>
+            <select
+              name="department"
+              defaultValue={user.department ?? ""}
+              className="border rounded px-3 py-2"
+            >
+              <option value="">No department</option>
+              {DEPARTMENTS.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+            <button className="rounded-full bg-gdg-blue text-white px-5 py-2 font-medium self-start">
+              Update role
+            </button>
+          </form>
+        </section>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-10">
         <section>
