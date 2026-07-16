@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import { GdgDots } from "@/components/gdg-dots";
 import { HeaderAuth } from "@/components/header-auth";
+import { LoadingIndicator } from "@/components/loading-indicator";
 import "./globals.css";
 
 // GDG's brand guidelines specify "Google Sans" / "Google Sans Mono" as the
@@ -47,13 +48,13 @@ export default function RootLayout({
             </Link>
             <div className="flex items-center gap-6 text-sm">
               <Link href="/events" className="hover:text-gdg-blue transition-colors">
-                Events
+                Events <LoadingIndicator />
               </Link>
               <Link href="/merch" className="hover:text-gdg-green transition-colors">
-                Merch
+                Merch <LoadingIndicator />
               </Link>
               <Link href="/about" className="hover:text-gdg-yellow transition-colors">
-                About
+                About <LoadingIndicator />
               </Link>
               <Link href="/apply" className="btn-press rounded-full bg-gdg-blue text-white px-4 py-1.5 font-medium">
                 Apply
