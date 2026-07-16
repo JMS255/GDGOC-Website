@@ -1,6 +1,7 @@
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { TERM_MANAGERS, type OrgKpiRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { createKpi, updateKpi, deleteKpi } from "./actions"
 
 async function getKpis(): Promise<OrgKpiRecord[]> {
@@ -29,7 +30,10 @@ export default async function AdminKpisPage() {
         </form>
 
         {kpis.length === 0 ? (
-          <p className="opacity-60">No KPIs yet.</p>
+          <EmptyState
+            title="No KPIs yet"
+            description="Add one on the left — it'll show up as a stat tile at the top of every member's dashboard."
+          />
         ) : (
           <ul className="grid sm:grid-cols-2 gap-3 content-start">
             {kpis.map((kpi) => (

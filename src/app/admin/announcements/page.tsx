@@ -1,6 +1,7 @@
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type AnnouncementRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { createAnnouncement, deleteAnnouncement } from "./actions"
 
 async function getAnnouncements(): Promise<AnnouncementRecord[]> {
@@ -29,7 +30,10 @@ export default async function AdminAnnouncementsPage() {
         </form>
 
         {announcements.length === 0 ? (
-          <p className="opacity-60">Nothing posted yet.</p>
+          <EmptyState
+            title="Nothing posted yet"
+            description="Write one on the left — it shows up on every member's dashboard right away."
+          />
         ) : (
           <ul className="grid sm:grid-cols-2 gap-3 content-start">
             {announcements.map((a) => (

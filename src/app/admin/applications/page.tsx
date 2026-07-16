@@ -2,6 +2,7 @@ import Link from "next/link"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type ApplicationRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 
 async function getNewApplications(department: string | null): Promise<ApplicationRecord[]> {
   let query = adminDb.collection("applications").where("status", "==", "new")
@@ -48,7 +49,10 @@ export default async function AdminApplicationsPage() {
       </p>
 
       {applications.length === 0 ? (
-        <p className="opacity-60">No applications to interview right now.</p>
+        <EmptyState
+          title="No applications to interview right now"
+          description="They'll show up here once someone applies at /apply."
+        />
       ) : (
         <ul className="grid sm:grid-cols-2 gap-3">
           {applications.map((app) => (

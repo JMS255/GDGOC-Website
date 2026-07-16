@@ -2,6 +2,7 @@ import Image from "next/image"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type ProductRecord, type MerchOrderRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { createProduct, toggleProductActive, setOrderStatus } from "./actions"
 
 async function getProducts(): Promise<ProductRecord[]> {
@@ -67,6 +68,12 @@ export default async function AdminMerchPage() {
           </button>
         </form>
 
+        {products.length === 0 ? (
+          <EmptyState
+            title="No products yet"
+            description="Add one on the left — it'll show up on the public /merch page right away."
+          />
+        ) : (
         <ul className="grid sm:grid-cols-2 gap-2 content-start">
           {products.map((product) => (
             <li key={product.id} className="border rounded-lg p-3 flex items-center justify-between gap-3">
@@ -99,13 +106,17 @@ export default async function AdminMerchPage() {
             </li>
           ))}
         </ul>
+        )}
         </div>
       </section>
 
       <section>
         <h2 className="font-semibold mb-3">Pending Orders</h2>
         {pendingOrders.length === 0 ? (
-          <p className="text-sm opacity-60">Nothing pending review.</p>
+          <EmptyState
+            title="Nothing pending review"
+            description="Orders will show up here once someone checks out on /merch."
+          />
         ) : (
           <ul className="grid sm:grid-cols-2 gap-4">
             {pendingOrders.map((order) => (

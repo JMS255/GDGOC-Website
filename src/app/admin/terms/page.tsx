@@ -1,6 +1,7 @@
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { TERM_MANAGERS, type MembershipTermRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { createTerm, activateTerm } from "./actions"
 
 async function getTerms(): Promise<MembershipTermRecord[]> {
@@ -50,30 +51,37 @@ export default async function AdminTermsPage() {
           </button>
         </form>
 
-        <ul className="grid sm:grid-cols-2 gap-3 content-start">
-          {terms.map((term) => (
-            <li key={term.id} className="border rounded-lg p-4 flex items-center justify-between">
-              <div>
-                <p className="font-medium">
-                  {term.label} {term.isActive && <span className="text-xs">(active)</span>}
-                </p>
-                <p className="text-sm opacity-60">
-                  {term.startDate.toLocaleDateString()} – {term.endDate.toLocaleDateString()}
-                </p>
-              </div>
-              {!term.isActive && (
-                <form
-                  action={async () => {
-                    "use server"
-                    await activateTerm(term.id)
-                  }}
-                >
-                  <button className="text-sm rounded-full border px-4 py-2">Activate</button>
-                </form>
-              )}
-            </li>
-          ))}
-        </ul>
+        {terms.length === 0 ? (
+          <EmptyState
+            title="No terms yet"
+            description="Create one on the left to open renewals for members this semester."
+          />
+        ) : (
+          <ul className="grid sm:grid-cols-2 gap-3 content-start">
+            {terms.map((term) => (
+              <li key={term.id} className="border rounded-lg p-4 flex items-center justify-between">
+                <div>
+                  <p className="font-medium">
+                    {term.label} {term.isActive && <span className="text-xs">(active)</span>}
+                  </p>
+                  <p className="text-sm opacity-60">
+                    {term.startDate.toLocaleDateString()} – {term.endDate.toLocaleDateString()}
+                  </p>
+                </div>
+                {!term.isActive && (
+                  <form
+                    action={async () => {
+                      "use server"
+                      await activateTerm(term.id)
+                    }}
+                  >
+                    <button className="text-sm rounded-full border px-4 py-2">Activate</button>
+                  </form>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

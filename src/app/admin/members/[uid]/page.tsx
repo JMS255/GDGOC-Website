@@ -9,6 +9,7 @@ import {
   type PerformanceReviewRecord,
 } from "@/lib/types"
 import { assignResponsibility, setResponsibilityStatus, submitPerformanceReview, assignRole } from "./actions"
+import { EmptyState } from "@/components/empty-state"
 
 async function getResponsibilities(uid: string): Promise<ResponsibilityRecord[]> {
   const snapshot = await adminDb
@@ -152,7 +153,10 @@ export default async function AdminMemberDetailPage({
           </form>
 
           {responsibilities.length === 0 ? (
-            <p className="text-sm opacity-60">No responsibilities assigned yet.</p>
+            <EmptyState
+              title="No responsibilities assigned yet"
+              description="Use the form above to assign this member their first task."
+            />
           ) : (
             <ul className="flex flex-col gap-2">
               {responsibilities.map((r) => (
@@ -226,7 +230,10 @@ export default async function AdminMemberDetailPage({
           )}
 
           {reviews.length === 0 ? (
-            <p className="text-sm opacity-60">No reviews yet.</p>
+            <EmptyState
+              title="No reviews yet"
+              description="Reviews for past terms will show up here once submitted."
+            />
           ) : (
             <ul className="flex flex-col gap-2">
               {reviews.map((review) => (

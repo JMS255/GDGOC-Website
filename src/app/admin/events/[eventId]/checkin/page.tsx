@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { toggleCheckIn } from "./actions"
 
 interface CheckinRow {
@@ -50,7 +51,10 @@ export default async function CheckinPage({
       <p className="text-sm opacity-60 mb-6">{rows.length} RSVP(s)</p>
 
       {rows.length === 0 ? (
-        <p className="opacity-60">No RSVPs yet.</p>
+        <EmptyState
+          title="No RSVPs yet"
+          description="Once members RSVP on the public event page, they'll show up here to check in."
+        />
       ) : (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {rows.map((row) => (

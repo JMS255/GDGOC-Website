@@ -2,6 +2,7 @@ import Link from "next/link"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 
 interface MemberSummary {
   uid: string
@@ -33,7 +34,10 @@ export default async function AdminMembersPage() {
       </div>
 
       {activeMembers.length === 0 ? (
-        <p className="opacity-60">No active members yet.</p>
+        <EmptyState
+          title="No active members yet"
+          description="Approve an application to add your first member."
+        />
       ) : (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {activeMembers.map((member) => (

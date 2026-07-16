@@ -2,6 +2,7 @@ import Link from "next/link"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type EventRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { EventForm } from "./event-form"
 import { publishEvent, cancelEvent } from "./actions"
 
@@ -32,6 +33,12 @@ export default async function AdminEventsPage() {
       <div className="grid lg:grid-cols-[320px_1fr] gap-10">
         <EventForm />
 
+        {events.length === 0 ? (
+          <EmptyState
+            title="No events yet"
+            description="Create one on the left, then publish it to make it public."
+          />
+        ) : (
         <ul className="grid sm:grid-cols-2 gap-3 content-start">
           {events.map((event) => (
             <li key={event.id} className="border rounded-lg p-4">
@@ -76,6 +83,7 @@ export default async function AdminEventsPage() {
             </li>
           ))}
         </ul>
+        )}
       </div>
     </div>
   )

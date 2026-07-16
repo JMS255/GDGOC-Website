@@ -2,6 +2,7 @@ import Image from "next/image"
 import { requireRole } from "@/lib/dal"
 import { adminDb } from "@/lib/firebase/admin"
 import { DEPT_HEAD_OR_ABOVE, type PaymentProofRecord } from "@/lib/types"
+import { EmptyState } from "@/components/empty-state"
 import { approvePayment, rejectPayment } from "./actions"
 
 async function getPendingProofs(): Promise<PaymentProofRecord[]> {
@@ -33,7 +34,10 @@ export default async function AdminPaymentsPage() {
     <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-2xl font-bold mb-6">Payment Proofs</h1>
       {proofs.length === 0 ? (
-        <p className="opacity-60">Nothing pending review.</p>
+        <EmptyState
+          title="Nothing pending review"
+          description="Payment proofs show up here once a member submits one on /membership."
+        />
       ) : (
         <ul className="grid sm:grid-cols-2 gap-4">
           {proofs.map((proof) => (
